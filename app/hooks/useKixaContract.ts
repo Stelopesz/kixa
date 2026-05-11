@@ -3,7 +3,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider, web3, BN } from "@coral-xyz/anchor";
 import { useWallet } from "@/app/contexts/WalletContext";
 
-const RPC_URL = "https://api.devnet.solana.com";
+const RPC_URL = "https://curtly-generic-paralyses.ngrok-free.dev";
 const PROGRAM_ID = new PublicKey("2dss4aR8pXV9dJP5Y3dL2ZVcL3W4NWNynCMfLojmVPLx");
 
 const IDL = {
