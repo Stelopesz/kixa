@@ -257,6 +257,7 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
         agentId: `kixa-${selectedType}-${Date.now()}`,
         scope,
         expiresInHours: resolvedHours,
+        isNewAgent: false,
       });
       setSuccess(true);
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, zIndex: 9999 });
