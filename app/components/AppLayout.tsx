@@ -107,8 +107,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <span style={{display:"flex",alignItems:"center",gap:8}}><span style={{width:8,height:8,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/><span style={{fontSize:12,fontFamily:"monospace"}}>{shortAddress}</span></span>
             <button onClick={()=>{disconnect();setTimeout(()=>router.push("/"),100);}} style={{padding:0,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",cursor:"pointer"}}><LogOut size={14}/></button>
           </div>
-          <OnboardingTutorial ref={tutorialRef}/>
-        </aside>
+          </aside>
+        <OnboardingTutorial ref={tutorialRef}/>
         <main className="kx-main">
           <div className="kx-mheader">
             <Link href="/dashboard" style={{textDecoration:"none"}}><img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:28}}/></Link>
