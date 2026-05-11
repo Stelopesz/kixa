@@ -13,7 +13,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { connected, shortAddress, disconnect } = useWallet();
   const { t, locale, setLocale } = useI18n();
-  const [isDark, setIsDark] = useState(() => { if (typeof window !== "undefined") { return localStorage.getItem("kixa-theme") !== "light"; } return true; });
+  const [isDark, setIsDark] = useState(() => { if (typeof window !== "undefined") { return localStorage.getItem("kixa-theme") === "dark"; } return false; });
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
   const tutorialRef = useRef<OnboardingTutorialHandle>(null);
