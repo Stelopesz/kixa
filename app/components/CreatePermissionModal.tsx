@@ -253,11 +253,28 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
     if (!selectedType) return;
     try {
       const scope = `${selectedType}:${config.limit || "0"}:${config.token || config.fromToken || "SOL"}`;
+      const agentId = `kixa-${selectedType}-${Date.now()}`;
       await grantPermission({
-        agentId: `kixa-${selectedType}-${Date.now()}`,
+        agentId,
         scope,
         expiresInHours: resolvedHours,
         isNewAgent: false,
+      });
+      const expiration = new Date();
+      expiration.setHours(expiration.getHours() + resolvedHours);
+      await fetch("/api/permissions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          wallet_address: publicKey,
+          type: selectedType,
+          name: selectedType.charAt(0).toUpperCase() + selectedType.slice(1) + " Permission",
+          description: buildSummary(selectedType, config, t),
+          token: config.token || config.fromToken || "SOL",
+          limit: config.limit || "0",
+          config: config,
+          expiration: expiration.toISOString(),
+        }),
       });
       setSuccess(true);
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, zIndex: 9999 });
