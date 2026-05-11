@@ -23,6 +23,7 @@ export interface GrantParams {
   agentId: string;
   scope: string;
   expiresInHours: number;
+  isNewAgent?: boolean;
 }
 
 export function useKixaContract() {
@@ -55,12 +56,12 @@ export function useKixaContract() {
     return pda;
   }, [walletPublicKey]);
 
-  const grantPermission = useCallback(async ({ agentId, scope, expiresInHours }: GrantParams) => {
+  const grantPermission = useCallback(async ({ agentId, scope, expiresInHours, isNewAgent = false }: GrantParams) => {
     const program = getProgram();
     const permissionPda = getPermissionPda(agentId);
     const expiresAt = new BN(Math.floor(Date.now() / 1000) + expiresInHours * 3600);
     const tx = await program.methods
-      .grantPermission(agentId, scope, expiresAt)
+      .grantPermission(agentId, scope, expiresAt, isNewAgent)
       .accounts({ permission: permissionPda, owner: new PublicKey(walletPublicKey!), systemProgram: web3.SystemProgram.programId })
       .rpc();
     console.log("✅ grant_permission tx:", tx);
