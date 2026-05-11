@@ -1,0 +1,131 @@
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useWallet } from "@/app/contexts/WalletContext";
+import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft } from "lucide-react";
+
+export default function AgentCreatePage() {
+  const router = useRouter();
+  const { connected } = useWallet();
+  const [mounted, setMounted] = useState(false);
+  const [messages, setMessages] = useState<{role: string; content: string}[]>([
+    { role: "assistant", content: "Hi! I'll help you create your AI agent. What would you like your agent to do?" }
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
+    setMessages(prev => [...prev, { role: "user", content: input }]);
+    setInput("");
+    setLoading(true);
+    setTimeout(() => {
+      setMessages(prev => [...prev, { role: "assistant", content: "Great! How often should this run?" }]);
+      setLoading(false);
+    }, 1500);
+  };
+
+  if (!mounted) return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <Loader2 className="w-6 h-6 text-primary animate-spin" />
+    </div>
+  );
+
+  if (!connected) return (
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+      <p className="text-muted-foreground">Connect your wallet</p>
+      <button onClick={() => router.push("/")} className="px-6 py-2.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm">Go Home</button>
+    </div>
+  );
+
+  return (
+    <div className="space-y-6 animate-in">
+
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <button onClick={() => router.push("/agent")} className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors">
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+        <div>
+          <h1 className="hidden md:block text-2xl font-semibold tracking-tight">Create AI Agent</h1>
+          <p className="text-sm text-muted-foreground">Describe what you want your agent to do.</p>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="flex flex-col lg:flex-row gap-4">
+
+        {/* Chat */}
+        <div className="flex-1 glass-card rounded-2xl flex flex-col h-[500px]">
+          <div className="flex-1 overflow-y-auto p-5 space-y-4">
+            {messages.map((m, i) => (
+              <div key={i} className={`flex gap-3 items-start ${m.role === "user" ? "flex-row-reverse" : ""}`}>
+                {m.role === "assistant" && (
+                  <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-4 h-4 text-primary" />
+                  </div>
+                )}
+                <div className={`px-4 py-2.5 rounded-xl text-sm leading-relaxed max-w-[80%] ${
+                  m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted/50 text-foreground"
+                }`}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+            {loading && (
+              <div className="flex gap-3 items-center">
+                <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <Loader2 className="w-4 h-4 text-primary animate-spin" />
+                </div>
+                <span className="text-sm text-muted-foreground">Thinking...</span>
+              </div>
+            )}
+            <div ref={bottomRef} />
+          </div>
+
+          <div className="p-4 border-t border-border/50">
+            <div className="flex gap-2">
+              <input
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && handleSend()}
+                placeholder="Describe your agent..."
+                className="flex-1 px-4 py-2.5 rounded-xl bg-muted/50 border border-border/50 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
+              />
+              <button onClick={handleSend} disabled={loading} className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground disabled:opacity-50 hover:bg-primary/90 transition-colors">
+                <Send className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="flex flex-col gap-3 lg:w-64">
+          <div className="glass-card rounded-2xl p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Bot className="w-4 h-4 text-primary" />
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Agent Preview</h3>
+            </div>
+            <p className="text-sm text-muted-foreground italic">Config will appear as you chat...</p>
+          </div>
+
+          <div className="glass-card rounded-2xl p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-primary" />
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Permissions</h3>
+            </div>
+            <p className="text-sm text-muted-foreground italic">Rules will be defined by AI...</p>
+          </div>
+
+          <button disabled className="w-full py-3 rounded-xl bg-muted text-muted-foreground font-semibold text-sm cursor-not-allowed">
+            Create Agent
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
