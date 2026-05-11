@@ -240,7 +240,7 @@ function buildSummary(type: string, config: any, t: TFunc): string {
 /* ─── Main Modal ─── */
 export default function CreatePermissionModal({ onClose }: { onClose: () => void }) {
   const { addPermission } = usePermissions();
-  const { grantPermission } = useKixaContract(); const { shortAddress } = useWallet();
+  const { grantPermission } = useKixaContract(); const { shortAddress, publicKey } = useWallet();
   const { t } = useI18n();
   const [step, setStep] = useState(1);
   const [selectedType, setSelectedType] = useState<string | null>(null);
