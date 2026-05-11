@@ -254,12 +254,6 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
     try {
       const scope = `${selectedType}:${config.limit || "0"}:${config.token || config.fromToken || "SOL"}`;
       const agentId = `kixa-${selectedType}-${Date.now()}`;
-      await grantPermission({
-        agentId,
-        scope,
-        expiresInHours: resolvedHours,
-        isNewAgent: false,
-      });
       const expiration = new Date();
       expiration.setHours(expiration.getHours() + resolvedHours);
       await fetch("/api/permissions", {
