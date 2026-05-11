@@ -78,26 +78,26 @@ export default function ActivityPage() {
   }), [activities]);
 
   const timeLabels: Record<TimeFilter, string> = {
-    all:   "All",
-    today: "Today",
-    week:  "This Week",
-    month: "This Month",
+    all:   t("filter.all"),
+    today: t("actPage.today") || "Today",
+    week:  t("actPage.week") || "This Week",
+    month: t("actPage.month") || "This Month",
   };
 
   const typeLabels: Record<TypeFilter, string> = {
-    all:     "All",
-    created: "Created",
-    revoked: "Revoked",
-    expired: "Expired",
+    all:     t("filter.all"),
+    created: t("activity.created"),
+    revoked: t("activity.revoked"),
+    expired: t("activity.expired"),
   };
 
   const typeDisplayLabels: Record<string, string> = {
-    spend:    "Spend Limit",
-    mint:     "Mint NFT",
-    transfer: "Transfer",
-    execute:  "Execute",
-    swap:     "Swap",
-    custom:   "Custom",
+    spend:    t("ptype.spend"),
+    mint:     t("ptype.mint"),
+    transfer: t("ptype.transfer"),
+    execute:  t("ptype.spend"),
+    swap:     t("ptype.swap"),
+    custom:   t("ptype.custom"),
   };
 
   return (

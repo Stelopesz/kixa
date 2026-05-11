@@ -10,14 +10,14 @@ import { formatDistanceToNow } from "date-fns";
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
 const typeLabels: Record<string, string> = {
-  spend: "Spend Limit",
-  mint: "Mint NFT",
-  transfer: "Transfer",
-  execute: "Execute",
-  swap: "Token Swap",
-  time_based: "Time-based",
-  whitelist: "Whitelist",
-  custom: "Custom",
+  spend: t("ptype.spend"),
+  mint: t("ptype.mint"),
+  transfer: t("ptype.transfer"),
+  execute: t("ptype.spend"),
+  swap: t("ptype.swap"),
+  time_based: t("ptype.timeBased"),
+  whitelist: t("ptype.whitelist"),
+  custom: t("ptype.custom"),
 };
 
 
