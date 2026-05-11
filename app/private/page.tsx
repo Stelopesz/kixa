@@ -22,7 +22,7 @@ export default function PrivatePage() {
     try {
       const amountLamports = BigInt(Math.floor(parseFloat(amount) * 1_000_000_000));
       const result = await executePrivateTransfer({ recipientAddress: recipient, amountLamports });
-      setTxHash(result.txHash as string);
+      setTxHash(result.txHash as unknown as string);
       const vk = await generateViewingKey(`Transfer ${amount} SOL`);
       setViewingKey(vk.key);
       setSuccess(true);
