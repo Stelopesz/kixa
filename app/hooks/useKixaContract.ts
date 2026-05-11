@@ -10,7 +10,7 @@ const IDL = {
   address: "2dss4aR8pXV9dJP5Y3dL2ZVcL3W4NWNynCMfLojmVPLx",
   metadata: { name: "kira_permissions", version: "0.1.0", spec: "0.1.0" },
   instructions: [
-    { name: "grantPermission", discriminator: [0,0,0,0,0,0,0,0], accounts: [{ name: "permission", writable: true, pda: { seeds: [{ kind: "const", value: [112,101,114,109,105,115,115,105,111,110] }, { kind: "account", path: "owner" }, { kind: "arg", path: "agentId" }] } }, { name: "owner", writable: true, signer: true }, { name: "systemProgram", address: "11111111111111111111111111111111" }], args: [{ name: "agentId", type: "string" }, { name: "scope", type: "string" }, { name: "expiresAt", type: "i64" }] },
+    { name: "grantPermission", discriminator: [0,0,0,0,0,0,0,0], accounts: [{ name: "permission", writable: true, pda: { seeds: [{ kind: "const", value: [112,101,114,109,105,115,115,105,111,110] }, { kind: "account", path: "owner" }, { kind: "arg", path: "agentId" }] } }, { name: "owner", writable: true, signer: true }, { name: "feeReceiver", writable: true }, { name: "systemProgram", address: "11111111111111111111111111111111" }], args: [{ name: "agentId", type: "string" }, { name: "scope", type: "string" }, { name: "expiresAt", type: "i64" }, { name: "isNewAgent", type: "bool" }] },
     { name: "revokePermission", discriminator: [0,0,0,0,0,0,0,1], accounts: [{ name: "permission", writable: true, pda: { seeds: [{ kind: "const", value: [112,101,114,109,105,115,115,105,111,110] }, { kind: "account", path: "owner" }, { kind: "account", path: "permission", field: "agentId" }] } }, { name: "owner", signer: true }], args: [] },
     { name: "checkPermission", discriminator: [0,0,0,0,0,0,0,2], accounts: [{ name: "permission" }], args: [] }
   ],
