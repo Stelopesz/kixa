@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import OnboardingTutorial, { OnboardingTutorialHandle } from "@/app/components/OnboardingTutorial";
 import { useRef } from "react";
-import { LayoutDashboard, Shield, Bot, Activity, User, Sun, Moon, HelpCircle, Globe, ChevronDown, LogOut } from "lucide-react";
+import { LayoutDashboard, Shield, Bot, Activity, User, Sun, Moon, HelpCircle, Globe, ChevronDown, LogOut, Lock } from "lucide-react";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { useI18n } from "@/app/contexts/I18nContext";
 
@@ -31,7 +31,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: "/permissions", icon: Shield, label: t("nav.permissions") },
     { href: "/agents", icon: Bot, label: t("nav.agent") },
     { href: "/activity", icon: Activity, label: t("nav.activity") },
-    { href: "/profile", icon: User, label: t("nav.profile") }
+    { href: "/profile", icon: User, label: t("nav.profile") },
+    { href: "/private", icon: Lock, label: "Private" }
   ];
 
   const active = (href: string) => pathname === href || (href === "/agents" && pathname.startsWith("/agents"));
