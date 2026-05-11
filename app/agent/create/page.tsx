@@ -110,7 +110,7 @@ export default function AgentCreatePage() {
 
       {/* Header */}
       <div className="flex items-center gap-3">
-        <button onClick={() => router.push("/agent")} className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors">
+        <button onClick={() => router.push("/agents")} className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors">
           <ArrowLeft className="w-4 h-4" />
         </button>
         <div>
@@ -207,7 +207,7 @@ export default function AgentCreatePage() {
           </div>
 
           {deployed ? (
-            <button onClick={() => router.push("/agent")} className="w-full py-3 rounded-xl bg-green-500 text-white font-semibold text-sm hover:bg-green-600 transition-colors">
+            <button onClick={() => router.push("/agents")} className="w-full py-3 rounded-xl bg-green-500 text-white font-semibold text-sm hover:bg-green-600 transition-colors">
               View Agents
             </button>
           ) : (
