@@ -144,7 +144,7 @@ export default function ActivityPage() {
             <Input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search activity..."
+              placeholder={t("actPage.searchPlaceholder")}
               className="pl-9 h-9 text-sm bg-muted/30 border-border/50"
             />
           </div>

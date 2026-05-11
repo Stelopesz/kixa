@@ -21,7 +21,7 @@ export default function Profile() {
   const { t } = useI18n();
   const navigate = useRouter();
 
-  const [userName, setUserName] = useState(() => localStorage.getItem("kixa-username") || "KIXA User");
+  const [userName, setUserName] = useState(() => localStorage.getItem("kixa-username") || t("profile.defaultName") || "KIXA User");
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState(userName);
   const [selectedColor, setSelectedColor] = useState(() => {
