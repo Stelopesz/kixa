@@ -290,3 +290,31 @@ html, body { height: 100%; overflow-y: auto; overflow-x: hidden; }
 
 
 
+
+
+/* Global card consistency */
+.glass-card, .glass-card-elevated {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.glass-card-elevated {
+  box-shadow: 0 4px 24px hsla(var(--glass-shadow));
+}
+
+/* Consistent hover states */
+.card-hover {
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.card-hover:hover {
+  border-color: hsl(var(--primary) / 0.3);
+  box-shadow: 0 4px 20px hsl(var(--primary) / 0.08);
+}
+
+/* Fix card overflow clipping */
+.kx-main-inner > * {
+  overflow: visible;
+}
