@@ -4,7 +4,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import OnboardingTutorial, { OnboardingTutorialHandle } from "@/app/components/OnboardingTutorial";
 import { useRef } from "react";
-import { LayoutDashboard, Shield, Bot, Activity, User, Sun, Moon, HelpCircle, Globe, ChevronDown, LogOut, Lock } from "lucide-react";
+import { LayoutDashboard, Shield, Bot, Activity, User, Sun, Moon, HelpCircle, LogOut, Lock } from "lucide-react";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { useI18n } from "@/app/contexts/I18nContext";
 
@@ -12,9 +12,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const { connected, shortAddress, disconnect } = useWallet();
-  const { t, locale, setLocale } = useI18n();
+  const { t, locale } = useI18n();
   const [isDark, setIsDark] = useState(() => { if (typeof window !== "undefined") { return localStorage.getItem("kixa-theme") === "dark"; } return false; });
-  const [showLangMenu, setShowLangMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
   const tutorialRef = useRef<OnboardingTutorialHandle>(null);
 
@@ -90,19 +89,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <button onClick={()=>tutorialRef.current?.open()} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
               <HelpCircle size={18}/>{t("nav.quickGuide")}
             </button>
-            <div style={{position:"relative"}}>
-              <button onClick={()=>setShowLangMenu(!showLangMenu)} style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
-                <span style={{display:"flex",alignItems:"center",gap:12}}><Globe size={18}/>{locale==="en"?"English":locale==="pt"?"Português":"Español"}</span>
-                <ChevronDown size={14}/>
-              </button>
-              {showLangMenu&&(
-                <div style={{position:"absolute",bottom:"100%",left:0,right:0,marginBottom:4,background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:8,overflow:"hidden",zIndex:50}}>
-                  {[{code:"en",name:"English"},{code:"pt",name:"Português"},{code:"es",name:"Español"}].map(l=>(
-                    <button key={l.code} onClick={()=>{setLocale(l.code as any);setShowLangMenu(false);}} style={{display:"block",width:"100%",padding:"8px 12px",background:locale===l.code?"rgba(183,78,111,0.1)":"transparent",border:"none",color:locale===l.code?"#b74e6f":"hsl(var(--foreground))",fontSize:13,cursor:"pointer",textAlign:"left"}}>{l.name}</button>
-                  ))}
-                </div>
-              )}
-            </div>
+
           </div>
           <div style={{marginTop:16,padding:"10px 12px",background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <span style={{display:"flex",alignItems:"center",gap:8}}><span style={{width:8,height:8,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/><span style={{fontSize:12,fontFamily:"monospace"}}>{shortAddress}</span></span>
@@ -115,16 +102,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link href="/dashboard" style={{textDecoration:"none"}}><img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:28}}/></Link>
             <div style={{display:"flex",alignItems:"center",gap:4}}>
               <button onClick={()=>setIsDark(!isDark)} style={{padding:8,borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",cursor:"pointer"}}>{isDark?<Sun size={18}/>:<Moon size={18}/>}</button>
-              <div style={{position:"relative"}}>
-                <button onClick={()=>setShowLangMenu(!showLangMenu)} style={{padding:8,borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",cursor:"pointer"}}><Globe size={18}/></button>
-                {showLangMenu&&(
-                  <div style={{position:"absolute",top:"100%",right:0,marginTop:4,background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:8,overflow:"hidden",zIndex:50,minWidth:120}}>
-                    {[{code:"en",name:"English"},{code:"pt",name:"Português"},{code:"es",name:"Español"}].map(l=>(
-                      <button key={l.code} onClick={()=>{setLocale(l.code as any);setShowLangMenu(false);}} style={{display:"block",width:"100%",padding:"8px 12px",background:locale===l.code?"rgba(183,78,111,0.1)":"transparent",border:"none",color:locale===l.code?"#b74e6f":"hsl(var(--foreground))",fontSize:13,cursor:"pointer",textAlign:"left"}}>{l.name}</button>
-                    ))}
-                  </div>
-                )}
-              </div>
+
             </div>
           </div>
           <div className="kx-main-inner">{children}</div>
