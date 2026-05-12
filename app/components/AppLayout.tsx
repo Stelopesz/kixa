@@ -36,13 +36,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   const active = (href: string) => pathname === href || (href === "/agents" && pathname.startsWith("/agents"));
 
+  if (!mounted) return null;
+
   useEffect(() => {
     if (mounted && !connected) {
       router.push("/");
     }
   }, [mounted, connected, router]);
-
-  if (!mounted) return null;
 
   if (!connected) return null;
 
