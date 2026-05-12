@@ -61,7 +61,7 @@ export default function AgentDetailPage() {
       </div>
 
       <div style={{display:"grid",gap:20}}>
-        <div style={{padding:24,background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:16}}>
+        <div className="stat-card" style={{padding:24}}>
           <h3 style={{fontSize:16,fontWeight:600,marginBottom:16,display:"flex",alignItems:"center",gap:8}}>
             <Shield size={18} style={{color:"#b74e6f"}} />
             Permissions
@@ -69,7 +69,7 @@ export default function AgentDetailPage() {
           {(agent.permissions||[]).length===0?<p style={{fontSize:14,color:"hsl(var(--muted-foreground))"}}>No permissions</p>:(agent.permissions||[]).map((p:any)=>(<div key={p.id} style={{padding:12,background:"hsl(var(--background))",border:"1px solid hsl(var(--border))",borderRadius:10,marginBottom:8,display:"flex",justifyContent:"space-between"}}><div><p style={{fontWeight:600,fontSize:14,margin:"0 0 2px"}}>{p.name}</p><p style={{fontSize:12,color:"hsl(var(--muted-foreground))",margin:0}}>{p.type} · {p.limit} {p.token}</p></div><span style={{fontSize:11,padding:"2px 8px",borderRadius:6,background:"rgba(34,197,94,0.1)",color:"#22c55e",border:"1px solid rgba(34,197,94,0.2)"}}>{p.status||"active"}</span></div>))}
         </div>
 
-        <div style={{padding:24,background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:16}}>
+        <div className="stat-card" style={{padding:24}}>
           <h3 style={{fontSize:16,fontWeight:600,marginBottom:12}}>Agent Details</h3>
           <div style={{display:"grid",gap:12,fontSize:14}}>
             <div style={{display:"flex",justifyContent:"space-between"}}>
