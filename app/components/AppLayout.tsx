@@ -70,9 +70,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       `}</style>
       <div className="kx-layout">
         <aside className="kx-sidebar">
-          <div style={{marginBottom:32, paddingLeft:4}}>
+          <div style={{marginBottom:32}}>
             <Link href="/dashboard" style={{textDecoration:"none"}}>
-              <img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:36}} />
+              <img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:36, marginLeft:-4}} />
             </Link>
             <p style={{fontSize:11,color:"hsl(var(--muted-foreground))",marginTop:6,marginLeft:0,paddingLeft:0}}>AI moves fast.<br/>Your rules move first.</p>
           </div>
