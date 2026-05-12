@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, Shield, Lock, Bot, Cpu, Clock, Zap, Map, Eye, Globe, Sun, Moon, Brain, Sparkles, ChevronDown } from "lucide-react";
 
-const sectionIds = ["what","how","quickperm","agentbuilder","types","security","activity","solana","roadmap","vision"];
+const sectionIds = ["what","how","quickperm","agentbuilder","types","security","activity","solana","fees","vision"];
 
 function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -61,7 +61,7 @@ export default function DocsPage() {
     { id: "security", icon: Lock, label: "Security Model" },
     { id: "activity", icon: Clock, label: "Activity Tracking" },
     { id: "solana", icon: Zap, label: "Why Solana?" },
-    { id: "roadmap", icon: Map, label: "Roadmap" },
+    { id: "fees", icon: Zap, label: "Fees" },
     { id: "vision", icon: Eye, label: "The Vision" },
   ];
 
@@ -278,22 +278,22 @@ export default function DocsPage() {
             </div>
           </Section>
 
-          <Section id="roadmap" icon={Map} title="Roadmap">
-            <div className="space-y-3">
-              {[
-                { phase: "Phase 1", status: "✅", desc: "Anchor smart contract + Dashboard + AI Agent Builder" },
-                { phase: "Phase 2", status: "🔄", desc: "Mainnet deploy + AI agent integrations + API" },
-                { phase: "Phase 3", status: "📋", desc: "Multi-agent support + Shuriken tier system + Public API" },
-                { phase: "Phase 4", status: "🔮", desc: "Permission marketplace + SDK + Cross-chain" },
-              ].map(({ phase, status, desc }) => (
-                <div key={phase} className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-border/40">
-                  <span className="text-lg">{status}</span>
-                  <div>
-                    <p className="text-sm font-bold text-primary">{phase}</p>
-                    <p className="text-sm text-muted-foreground">{desc}</p>
-                  </div>
+          <Section id="fees" icon={Zap} title="Fees">
+            <div className="space-y-4">
+              <p className="text-muted-foreground">KIXA charges a small protocol fee for on-chain permission operations.</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
+                  <p className="text-xs text-muted-foreground mb-1">Grant Permission Only</p>
+                  <p className="text-2xl font-black text-primary">0.01 SOL</p>
+                  <p className="text-xs text-muted-foreground mt-1">For users adding permissions to existing agents</p>
                 </div>
-              ))}
+                <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
+                  <p className="text-xs text-muted-foreground mb-1">Create Agent + Permissions</p>
+                  <p className="text-2xl font-black text-primary">0.05 SOL</p>
+                  <p className="text-xs text-muted-foreground mt-1">For users creating a new agent with permissions</p>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground">Network fees (gas) are separate and paid to Solana validators. KIXA fees go directly to the protocol treasury.</p>
             </div>
           </Section>
 
