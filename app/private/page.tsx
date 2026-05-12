@@ -48,7 +48,7 @@ export default function PrivatePage() {
           </p>
         </div>
 
-        <div style={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 16, padding: 24, marginBottom: 16 }}>
+        <div className="stat-card" style={{ padding: 24, marginBottom: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16, padding: "8px 12px", background: "rgba(183,78,111,0.05)", borderRadius: 8, border: "1px solid rgba(183,78,111,0.2)" }}>
             <Shield size={14} color="#b74e6f" />
             <span style={{ fontSize: 12, color: "#b74e6f", fontWeight: 500 }}>Powered by Cloak Protocol — ZK shielded pool on Solana</span>
@@ -123,7 +123,7 @@ export default function PrivatePage() {
           )}
         </div>
 
-        <div style={{ padding: 16, background: "rgba(183,78,111,0.05)", borderRadius: 12, border: "1px solid rgba(183,78,111,0.1)" }}>
+        <div className="stat-card" style={{ padding: 16 }}>
           <p style={{ fontSize: 11, color: "hsl(var(--muted-foreground))", lineHeight: 1.6 }}>
             <strong>How it works:</strong> Cloak uses a UTXO shielded pool with Groth16 ZK proofs generated client-side. Transactions are submitted via relay without custody. Viewing keys enable selective disclosure for compliance.
           </p>
