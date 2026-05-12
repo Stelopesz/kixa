@@ -5,7 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletProvider } from "@/app/contexts/WalletContext";
 import { I18nProvider } from "@/app/contexts/I18nContext";
 import WalletModal from "@/app/components/WalletModal";
-import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Globe, Check, Sparkles, ChevronDown } from "lucide-react";
+import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles } from "lucide-react";
 
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -83,9 +83,6 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
   const scrollY = useScrollY();
   const scrolled = scrollY > 30;
   const [isDark, setIsDark] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
-  const [lang, setLang] = useState("en");
-  const langs = [{ code: "en", label: "English" }, { code: "pt", label: "Português" }, { code: "es", label: "Español" }];
 
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains("dark"));
