@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KIXA — AI Permission Protocol on Solana
 
-## Getting Started
+**Your agent, your rules.**
 
-First, run the development server:
+KIXA is an on-chain permission protocol that lets you create, manage, and revoke what AI agents can do with your Solana wallet — without writing code.
 
-```bash
+🌐 **Live:** https://kixa.vercel.app
+📦 **GitHub:** https://github.com/Stelopesz/kixa
+
+---
+
+## The Problem
+
+AI agents are increasingly managing crypto wallets. But there's no standard way to define **what an agent can and cannot do** — no spending limits, no expiration dates, no audit trail. Users either give full wallet access or nothing.
+
+## The Solution
+
+KIXA lets you:
+- Define granular permissions (spend limits, swap caps, DCA rules)
+- Set expiration dates on every permission
+- Revoke access instantly
+- Use the **AI Builder** to create agents in plain English
+- Send funds **privately** via Cloak Protocol (ZK shielded pool)
+
+---
+
+## How Cloak is Used
+
+KIXA integrates the **Cloak SDK** (`@cloak.dev/sdk`) for private transfers on Solana:
+
+- **Private transfers:** AI agents execute payments without exposing amounts or addresses on-chain
+- **Viewing keys:** Users generate audit keys to share with accountants or regulators — proving transactions without public exposure
+- **ZK proofs:** Groth16 proofs generated client-side via the Cloak shielded UTXO pool
+
+The `/private` route in KIXA enables shielded SOL transfers powered by Cloak, with viewing key generation for selective disclosure.
+
+---
+
+## Smart Contract
+
+- **Program ID:** `2dss4aR8pXV9dJP5Y3dL2ZVcL3W4NWNynCMfLojmVPLx`
+- **IDL Account:** `CijynLJ7ufAC6ymBerbSxUtvhTehrBE7TPrUtcQsWeQm`
+- **Network:** Solana Devnet
+- **Source:** `/contracts/kira_permissions`
+
+### Fees
+- `0.01 SOL` — grant permission to existing agent
+- `0.05 SOL` — create new agent with permissions
+
+---
+
+## Tech Stack
+
+- **Frontend:** Next.js 14, TypeScript, Tailwind CSS
+- **Blockchain:** Solana, Anchor Framework
+- **Privacy:** Cloak Protocol SDK
+- **AI:** Claude Sonnet (Anthropic) via API
+- **Database:** Supabase (PostgreSQL)
+- **Auth:** Phantom Wallet
+
+---
+
+## Setup
+
+\`\`\`bash
+git clone https://github.com/Stelopesz/kixa
+cd kixa
+npm install --legacy-peer-deps
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+\`\`\`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+\`\`\`
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+ANTHROPIC_API_KEY=
+\`\`\`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- ✅ Connect Phantom wallet
+- ✅ Create AI agents via natural language (AI Builder)
+- ✅ Grant/revoke permissions on-chain
+- ✅ Spend limits, swap caps, DCA, DeFi, custom rules
+- ✅ Private transfers via Cloak (ZK shielded pool)
+- ✅ Viewing keys for compliance/audit
+- ✅ Activity feed
+- ✅ Mobile responsive (iOS-style bottom nav)
+- ✅ Light/dark mode
