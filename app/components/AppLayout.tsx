@@ -38,16 +38,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   if (!mounted) return null;
 
-  if (!connected) {
-    return (
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
-        <div style={{textAlign:"center"}}>
-          <p style={{marginBottom:16,color:"hsl(var(--muted-foreground))"}}>Connecting wallet...</p>
-          <button onClick={()=>router.push("/")} style={{padding:"10px 24px",borderRadius:10,background:"#b74e6f",color:"#fff",border:"none",cursor:"pointer"}}>Go Home</button>
-        </div>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (mounted && !connected) {
+      router.push("/");
+    }
+  }, [mounted, connected, router]);
+
+  if (!connected) return null;
 
   return (
     <>
