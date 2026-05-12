@@ -38,18 +38,6 @@ export default function DocsPage() {
     document.documentElement.classList.toggle("dark", next);
   };
 
-  const changeLang = (l: string) => {
-    setLocale(l);
-    localStorage.setItem("kixa-locale", l);
-    setLangOpen(false);
-  };
-
-  const langs = [
-    { code: "en", label: "English" },
-    { code: "pt", label: "Português" },
-    { code: "es", label: "Español" },
-  ];
-
   const sections = [
     { id: "what", icon: Shield, label: "What is KIXA?" },
     { id: "how", icon: Zap, label: "How It Works" },
