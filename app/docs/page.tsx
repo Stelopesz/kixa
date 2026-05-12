@@ -20,7 +20,7 @@ export default function DocsPage() {
     setDark(d);
     setIsDark(d);
     document.documentElement.classList.toggle("dark", d);
-    if (savedLocale && ["pt","en","es"].includes(savedLocale)) setLocale(savedLocale);
+    
   }, []);
 
   useEffect(() => {
