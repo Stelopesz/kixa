@@ -65,22 +65,8 @@ export default function AgentsPage() {
             <div 
               key={agent.id}
               onClick={() => router.push(`/agents/${agent.id}`)}
-              style={{
-                padding:20,
-                background:"hsl(var(--card))",
-                border:"1px solid hsl(var(--border))",
-                borderRadius:16,
-                cursor:"pointer",
-                transition:"all 0.2s"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#b74e6f";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "hsl(var(--border))";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              className="stat-card"
+              style={{ padding:20, cursor:"pointer" }}
             >
               <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12}}>
                 <div style={{display:"flex",alignItems:"center",gap:12}}>
