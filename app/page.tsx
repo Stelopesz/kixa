@@ -5,7 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { WalletProvider } from "@/app/contexts/WalletContext";
 import { I18nProvider } from "@/app/contexts/I18nContext";
 import WalletModal from "@/app/components/WalletModal";
-import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles } from "lucide-react";
+import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles, ChevronDown } from "lucide-react";
 
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
