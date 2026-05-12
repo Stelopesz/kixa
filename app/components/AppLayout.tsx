@@ -31,8 +31,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: "/permissions", icon: Shield, label: t("nav.permissions") },
     { href: "/agents", icon: Bot, label: t("nav.agent") },
     { href: "/activity", icon: Activity, label: t("nav.activity") },
-    { href: "/profile", icon: User, label: t("nav.profile") },
-    { href: "/private", icon: Lock, label: "Private" }
+    { href: "/private", icon: Lock, label: "Private" },
+    { href: "/profile", icon: User, label: t("nav.profile") }
   ];
 
   const active = (href: string) => pathname === href || (href === "/agents" && pathname.startsWith("/agents"));
@@ -74,7 +74,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link href="/dashboard" style={{textDecoration:"none"}}>
               <img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:36}} />
             </Link>
-            <p style={{fontSize:11,color:"hsl(var(--muted-foreground))",marginTop:6}}>AI moves fast.<br/>Your rules move first.</p>
+            <p style={{fontSize:11,color:"hsl(var(--muted-foreground))",marginTop:6,marginLeft:0,paddingLeft:0}}>AI moves fast.<br/>Your rules move first.</p>
           </div>
           <nav style={{flex:1,display:"flex",flexDirection:"column",gap:4}}>
             {navItems.map(({href,icon:Icon,label})=>(
