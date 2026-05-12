@@ -131,23 +131,7 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             
           </button>
-          <div style={{ position: "relative" }}>
-            <button onClick={() => setLangOpen(v => !v)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
-              <Globe className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm">{langs.find(l => l.code === lang)?.label}</span>
-            </button>
-            {langOpen && (
-              <div className="absolute top-full right-0 mt-1 w-40 rounded-xl border border-border/50 bg-card shadow-lg overflow-hidden z-50">
-                {langs.map(l => (
-                  <button key={l.code} onClick={() => { setLang(l.code); setLangOpen(false); }}
-                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-muted/50 ${lang === l.code ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                    {l.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+
           <button onClick={onConnect}
             className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-bold transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 active:scale-[0.97] ml-2">
             Connect Wallet
