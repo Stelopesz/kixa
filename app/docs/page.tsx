@@ -293,7 +293,7 @@ export default function DocsPage() {
 
         {/* Back to top */}
         <div className="mt-20 text-center">
-          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })})}
+          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all">
             Back to top
           </button>
