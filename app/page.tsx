@@ -76,6 +76,7 @@ function FloatingShapes({ scrollY, dark }: { scrollY: number; dark: boolean }) {
       }} />
 
       {/* Footer */}
+
       <footer style={{borderTop:"1px solid hsl(var(--border))",padding:"24px 32px",display:"flex",alignItems:"center",justifyContent:"space-between",flexWrap:"wrap",gap:16}}>
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <img src="/kixa-logo-light.svg" alt="KIXA" style={{height:24}} className="dark:hidden" />
