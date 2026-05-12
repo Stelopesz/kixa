@@ -70,7 +70,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       `}</style>
       <div className="kx-layout">
         <aside className="kx-sidebar">
-          <div style={{marginBottom:32}}>
+          <div style={{marginBottom:32, paddingLeft:4}}>
             <Link href="/dashboard" style={{textDecoration:"none"}}>
               <img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:36}} />
             </Link>
