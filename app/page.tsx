@@ -230,10 +230,10 @@ function LiveDemo() {
   useEffect(() => {
     if (!vis) return;
     const t = [
-      setTimeout(() => setStep(1), 500),
-      setTimeout(() => setStep(2), 2000),
-      setTimeout(() => setStep(3), 3500),
-      setTimeout(() => setStep(4), 5000),
+      setTimeout(() => setStep(1), 300),
+      setTimeout(() => setStep(2), 900),
+      setTimeout(() => setStep(3), 1500),
+      setTimeout(() => setStep(4), 2200),
     ];
     return () => t.forEach(clearTimeout);
   }, [vis]);
