@@ -441,7 +441,7 @@ function FinalCTA({ onConnect }: { onConnect: () => void }) {
           className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl bg-primary text-primary-foreground text-lg font-bold hover:bg-primary/90 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.97]">
           Get Started Now <ArrowRight className="w-5 h-5" />
         </button>
-        <p className="mt-5 text-xs text-muted-foreground/40">No signup. No fees. Just connect and go.</p>
+        <p className="mt-5 text-xs text-muted-foreground/40">No signup. Just connect and go.</p>
       </div>
     </section>
   );
