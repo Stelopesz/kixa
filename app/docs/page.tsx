@@ -76,7 +76,7 @@ export default function DocsPage() {
           </Link>
           <img
             src={isDark ? "/kixa-logo-dark.svg" : "/kixa-logo-light.svg"}
-            alt="KIXA" className="h-7 w-auto"
+            alt="KIXA" className="h-9 sm:h-11 w-auto"
           />
           <span className="text-sm font-semibold text-muted-foreground hidden sm:inline">Documentation</span>
         </div>
@@ -85,23 +85,7 @@ export default function DocsPage() {
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
-          <div className="relative">
-            <button onClick={() => setLangOpen(v => !v)}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
-              <Globe className="w-4 h-4" />
-              <span className="hidden sm:inline">{langs.find(l => l.code === locale)?.label}</span>
-            </button>
-            {langOpen && (
-              <div className="absolute top-full right-0 mt-1 w-40 rounded-xl border border-border/50 bg-card shadow-lg overflow-hidden z-50">
-                {langs.map(l => (
-                  <button key={l.code} onClick={() => changeLang(l.code)}
-                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-muted/50 ${locale === l.code ? "text-primary font-semibold" : "text-muted-foreground"}`}>
-                    {l.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+
         </div>
       </header>
 
@@ -307,7 +291,7 @@ export default function DocsPage() {
 
         {/* Back to top */}
         <div className="mt-20 text-center">
-          <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          <button onClick={() => { document.documentElement.scrollTo({ top: 0, behavior: "smooth" }); document.body.scrollTo({ top: 0, behavior: "smooth" }); }}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all">
             Back to top
           </button>
