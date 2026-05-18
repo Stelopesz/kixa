@@ -5,36 +5,11 @@ import { useWallet } from "@/app/contexts/WalletContext";
 import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft, Check } from "lucide-react";
 
 const TEMPLATES = [
-  {
-    icon: "📉",
-    name: "DCA Bot",
-    description: "Automatically buy a token at regular intervals.",
-    prompt: "I want a DCA bot that buys 10 SOL worth of ETH every week, with a maximum of 50 SOL total spend.",
-  },
-  {
-    icon: "📈",
-    name: "Trading Bot",
-    description: "Buy and sell based on price conditions.",
-    prompt: "I want a trading bot that swaps SOL to USDC when price drops 10%, never spending more than 20 SOL per transaction.",
-  },
-  {
-    icon: "⚖️",
-    name: "Rebalancer",
-    description: "Keep your portfolio at defined percentages automatically.",
-    prompt: "I want a rebalancer agent that keeps my portfolio at 50% SOL and 50% USDC, rebalancing every 24 hours.",
-  },
-  {
-    icon: "💸",
-    name: "Recurring Payment",
-    description: "Automatic recurring payments to a specific wallet.",
-    prompt: "I want an agent that sends 2 SOL every month to a specific wallet address, only to that wallet.",
-  },
-  {
-    icon: "⚡",
-    name: "Arbitrage Bot",
-    description: "Exploit price differences between DEXs.",
-    prompt: "I want an arbitrage bot that finds and exploits price differences between Solana DEXs, with a max spend of 10 SOL per trade.",
-  },
+  { icon: "📉", name: "DCA Bot", description: "Automatically buy a token at regular intervals.", prompt: "I want a DCA bot that buys 10 SOL worth of ETH every week, with a maximum of 50 SOL total spend." },
+  { icon: "📈", name: "Trading Bot", description: "Buy and sell based on price conditions.", prompt: "I want a trading bot that swaps SOL to USDC when price drops 10%, never spending more than 20 SOL per transaction." },
+  { icon: "⚖️", name: "Rebalancer", description: "Keep your portfolio at defined percentages automatically.", prompt: "I want a rebalancer agent that keeps my portfolio at 50% SOL and 50% USDC, rebalancing every 24 hours." },
+  { icon: "💸", name: "Recurring Payment", description: "Automatic recurring payments to a specific wallet.", prompt: "I want an agent that sends 2 SOL every month to a specific wallet address, only to that wallet." },
+  { icon: "⚡", name: "Arbitrage Bot", description: "Exploit price differences between DEXs.", prompt: "I want an arbitrage bot that finds and exploits price differences between Solana DEXs, with a max spend of 10 SOL per trade." },
 ];
 
 export default function AgentCreatePage() {
@@ -147,18 +122,7 @@ export default function AgentCreatePage() {
   return (
     <div className="space-y-6 animate-in">
 
-      {/* Header */}
-      <div className="flex items-center gap-3">
-        <button onClick={() => router.push("/agents")} className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors">
-          <ArrowLeft className="w-4 h-4" />
-        </button>
-        <div>
-          <h1 className="hidden md:block text-2xl font-semibold tracking-tight">Create AI Agent</h1>
-          <p className="text-sm text-muted-foreground">Describe what you want your agent to do.</p>
-        </div>
-      </div>
-
-      {/* Template Modal */}
+      {/* Templates Modal */}
       {showTemplates && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
           <div className="glass-card rounded-2xl p-6 w-full max-w-lg space-y-4">
@@ -189,6 +153,17 @@ export default function AgentCreatePage() {
           </div>
         </div>
       )}
+
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <button onClick={() => router.push("/agents")} className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors">
+          <ArrowLeft className="w-4 h-4" />
+        </button>
+        <div>
+          <h1 className="hidden md:block text-2xl font-semibold tracking-tight">Create AI Agent</h1>
+          <p className="text-sm text-muted-foreground">Describe what you want your agent to do.</p>
+        </div>
+      </div>
 
       {/* Grid */}
       <div className="flex flex-col lg:flex-row gap-4">
@@ -237,7 +212,6 @@ export default function AgentCreatePage() {
               <button onClick={handleSend} disabled={loading} className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground disabled:opacity-50 hover:bg-primary/90 transition-colors">
                 <Send className="w-4 h-4" />
               </button>
-            </div>
             </div>
           </div>
         </div>
