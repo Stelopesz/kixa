@@ -130,8 +130,7 @@ export default function AgentCreatePage() {
           <div className="relative glass-card-elevated w-full max-w-lg p-5 sm:p-6 animate-in max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-semibold">Choose a Template</h2>
-              <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted transition-colors">
-                <ArrowLeft className="w-4 h-4 opacity-0 absolute" />
+              <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted transition-colors flex items-center justify-center w-8 h-8">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
