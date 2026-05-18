@@ -4,6 +4,39 @@ import { useRouter } from "next/navigation";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft, Check } from "lucide-react";
 
+const TEMPLATES = [
+  {
+    icon: "📉",
+    name: "DCA Bot",
+    description: "Automatically buy a token at regular intervals.",
+    prompt: "I want a DCA bot that buys 10 SOL worth of ETH every week, with a maximum of 50 SOL total spend.",
+  },
+  {
+    icon: "📈",
+    name: "Trading Bot",
+    description: "Buy and sell based on price conditions.",
+    prompt: "I want a trading bot that swaps SOL to USDC when price drops 10%, never spending more than 20 SOL per transaction.",
+  },
+  {
+    icon: "⚖️",
+    name: "Rebalancer",
+    description: "Keep your portfolio at defined percentages automatically.",
+    prompt: "I want a rebalancer agent that keeps my portfolio at 50% SOL and 50% USDC, rebalancing every 24 hours.",
+  },
+  {
+    icon: "💸",
+    name: "Recurring Payment",
+    description: "Automatic recurring payments to a specific wallet.",
+    prompt: "I want an agent that sends 2 SOL every month to a specific wallet address, only to that wallet.",
+  },
+  {
+    icon: "⚡",
+    name: "Arbitrage Bot",
+    description: "Exploit price differences between DEXs.",
+    prompt: "I want an arbitrage bot that finds and exploits price differences between Solana DEXs, with a max spend of 10 SOL per trade.",
+  },
+];
+
 export default function AgentCreatePage() {
   const router = useRouter();
   const { connected, publicKey } = useWallet();
@@ -16,6 +49,7 @@ export default function AgentCreatePage() {
   const [agentConfig, setAgentConfig] = useState<any>(null);
   const [deploying, setDeploying] = useState(false);
   const [deployed, setDeployed] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
@@ -46,6 +80,11 @@ export default function AgentCreatePage() {
       setMessages(prev => [...prev, { role: "assistant", content: "Connection error. Please try again." }]);
     }
     setLoading(false);
+  };
+
+  const handleTemplate = (prompt: string) => {
+    setInput(prompt);
+    setShowTemplates(false);
   };
 
   const handleDeploy = async () => {
@@ -119,6 +158,38 @@ export default function AgentCreatePage() {
         </div>
       </div>
 
+      {/* Template Modal */}
+      {showTemplates && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
+          <div className="glass-card rounded-2xl p-6 w-full max-w-lg space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">Choose a Template</h2>
+              <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted/50 transition-colors text-muted-foreground">✕</button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {TEMPLATES.map((t) => (
+                <button key={t.name} onClick={() => handleTemplate(t.prompt)}
+                  className="flex items-start gap-3 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all text-left group">
+                  <span className="text-2xl">{t.icon}</span>
+                  <div>
+                    <p className="text-sm font-semibold group-hover:text-primary transition-colors">{t.name}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t.description}</p>
+                  </div>
+                </button>
+              ))}
+              <button onClick={() => setShowTemplates(false)}
+                className="flex items-start gap-3 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all text-left group">
+                <span className="text-2xl">✨</span>
+                <div>
+                  <p className="text-sm font-semibold group-hover:text-primary transition-colors">Custom</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">Describe your own agent with AI.</p>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Grid */}
       <div className="flex flex-col lg:flex-row gap-4">
 
@@ -150,7 +221,11 @@ export default function AgentCreatePage() {
             <div ref={bottomRef} />
           </div>
 
-          <div className="p-4 border-t border-border/50">
+          <div className="p-4 border-t border-border/50 space-y-2">
+            <button onClick={() => setShowTemplates(true)}
+              className="w-full py-2 rounded-xl border border-border/50 text-xs font-medium text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
+              Or start from a template →
+            </button>
             <div className="flex gap-2">
               <input
                 value={input}
@@ -162,6 +237,7 @@ export default function AgentCreatePage() {
               <button onClick={handleSend} disabled={loading} className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground disabled:opacity-50 hover:bg-primary/90 transition-colors">
                 <Send className="w-4 h-4" />
               </button>
+            </div>
             </div>
           </div>
         </div>
