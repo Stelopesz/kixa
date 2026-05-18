@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft, Check, TrendingDown, TrendingUp, Scale, Repeat, Zap, Pencil } from "lucide-react";
@@ -123,8 +124,8 @@ export default function AgentCreatePage() {
     <div className="space-y-6 animate-in">
 
       {/* Templates Modal */}
-      {showTemplates && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {showTemplates && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setShowTemplates(false)} />
           <div className="relative glass-card-elevated w-full max-w-lg p-5 sm:p-6 animate-in max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-5">
@@ -160,7 +161,7 @@ export default function AgentCreatePage() {
             </div>
           </div>
         </div>
-      )}
+      , document.body)}
 
       {/* Header */}
       <div className="flex items-center gap-3">
