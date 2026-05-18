@@ -131,9 +131,8 @@ export default function AgentCreatePage() {
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-semibold">Choose a Template</h2>
               <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted transition-colors">
-                <Check className="w-4 h-4 opacity-0" />
-                <span className="sr-only">Close</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{position:"absolute"}}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <ArrowLeft className="w-4 h-4 opacity-0 absolute" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-3">
