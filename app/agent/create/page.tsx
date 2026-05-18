@@ -2,14 +2,14 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@/app/contexts/WalletContext";
-import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft, Check } from "lucide-react";
+import { Send, Sparkles, Loader2, Bot, Shield, ArrowLeft, Check, TrendingDown, TrendingUp, Scale, Repeat, Zap, Pencil } from "lucide-react";
 
 const TEMPLATES = [
-  { icon: "📉", name: "DCA Bot", description: "Automatically buy a token at regular intervals.", prompt: "I want a DCA bot that buys 10 SOL worth of ETH every week, with a maximum of 50 SOL total spend." },
-  { icon: "📈", name: "Trading Bot", description: "Buy and sell based on price conditions.", prompt: "I want a trading bot that swaps SOL to USDC when price drops 10%, never spending more than 20 SOL per transaction." },
-  { icon: "⚖️", name: "Rebalancer", description: "Keep your portfolio at defined percentages automatically.", prompt: "I want a rebalancer agent that keeps my portfolio at 50% SOL and 50% USDC, rebalancing every 24 hours." },
-  { icon: "💸", name: "Recurring Payment", description: "Automatic recurring payments to a specific wallet.", prompt: "I want an agent that sends 2 SOL every month to a specific wallet address, only to that wallet." },
-  { icon: "⚡", name: "Arbitrage Bot", description: "Exploit price differences between DEXs.", prompt: "I want an arbitrage bot that finds and exploits price differences between Solana DEXs, with a max spend of 10 SOL per trade." },
+  { icon: TrendingDown, name: "DCA Bot", description: "Automatically buy a token at regular intervals.", prompt: "I want a DCA bot that buys 10 SOL worth of ETH every week, with a maximum of 50 SOL total spend." },
+  { icon: TrendingUp, name: "Trading Bot", description: "Buy and sell based on price conditions.", prompt: "I want a trading bot that swaps SOL to USDC when price drops 10%, never spending more than 20 SOL per transaction." },
+  { icon: Scale, name: "Rebalancer", description: "Keep your portfolio at defined percentages automatically.", prompt: "I want a rebalancer agent that keeps my portfolio at 50% SOL and 50% USDC, rebalancing every 24 hours." },
+  { icon: Repeat, name: "Recurring Payment", description: "Automatic recurring payments to a specific wallet.", prompt: "I want an agent that sends 2 SOL every month to a specific wallet address, only to that wallet." },
+  { icon: Zap, name: "Arbitrage Bot", description: "Exploit price differences between DEXs.", prompt: "I want an arbitrage bot that finds and exploits price differences between Solana DEXs, with a max spend of 10 SOL per trade." },
 ];
 
 export default function AgentCreatePage() {
@@ -130,24 +130,29 @@ export default function AgentCreatePage() {
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-semibold">Choose a Template</h2>
               <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted transition-colors">
-                <span className="text-sm">✕</span>
+                <Check className="w-4 h-4 opacity-0" />
+                <span className="sr-only">Close</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{position:"absolute"}}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              {TEMPLATES.map((tmpl) => (
-                <button key={tmpl.name} onClick={() => handleTemplate(tmpl.prompt)}
-                  className="flex flex-col items-start gap-2 p-4 rounded-2xl border-2 border-border/50 bg-muted/30 text-left transition-all hover:border-primary hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98]">
-                  <div className="p-2.5 rounded-xl bg-primary/10">
-                    <span className="text-lg">{tmpl.icon}</span>
-                  </div>
-                  <p className="text-sm font-semibold">{tmpl.name}</p>
-                  <p className="text-[11px] text-muted-foreground leading-relaxed">{tmpl.description}</p>
-                </button>
-              ))}
+              {TEMPLATES.map((tmpl) => {
+                const Icon = tmpl.icon;
+                return (
+                  <button key={tmpl.name} onClick={() => handleTemplate(tmpl.prompt)}
+                    className="flex flex-col items-start gap-2 p-4 rounded-2xl border-2 border-border/50 bg-muted/30 text-left transition-all hover:border-primary hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98]">
+                    <div className="p-2.5 rounded-xl bg-primary/10">
+                      <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <p className="text-sm font-semibold">{tmpl.name}</p>
+                    <p className="text-[11px] text-muted-foreground leading-relaxed">{tmpl.description}</p>
+                  </button>
+                );
+              })}
               <button onClick={() => setShowTemplates(false)}
                 className="flex flex-col items-start gap-2 p-4 rounded-2xl border-2 border-border/50 bg-muted/30 text-left transition-all hover:border-primary hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98]">
                 <div className="p-2.5 rounded-xl bg-primary/10">
-                  <span className="text-lg">✨</span>
+                  <Pencil className="w-5 h-5 text-primary" />
                 </div>
                 <p className="text-sm font-semibold">Custom</p>
                 <p className="text-[11px] text-muted-foreground leading-relaxed">Describe your own agent with AI.</p>
