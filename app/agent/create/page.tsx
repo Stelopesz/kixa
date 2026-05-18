@@ -124,30 +124,33 @@ export default function AgentCreatePage() {
 
       {/* Templates Modal */}
       {showTemplates && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}>
-          <div className="glass-card rounded-2xl p-6 w-full max-w-lg space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold">Choose a Template</h2>
-              <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted/50 transition-colors text-muted-foreground">✕</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-foreground/20 backdrop-blur-sm" onClick={() => setShowTemplates(false)} />
+          <div className="relative glass-card-elevated w-full max-w-lg p-5 sm:p-6 animate-in max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-lg font-semibold">Choose a Template</h2>
+              <button onClick={() => setShowTemplates(false)} className="p-2 rounded-xl hover:bg-muted transition-colors">
+                <span className="text-sm">✕</span>
+              </button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {TEMPLATES.map((t) => (
-                <button key={t.name} onClick={() => handleTemplate(t.prompt)}
-                  className="flex items-start gap-3 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all text-left group">
-                  <span className="text-2xl">{t.icon}</span>
-                  <div>
-                    <p className="text-sm font-semibold group-hover:text-primary transition-colors">{t.name}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{t.description}</p>
+            <div className="grid grid-cols-2 gap-3">
+              {TEMPLATES.map((tmpl) => (
+                <button key={tmpl.name} onClick={() => handleTemplate(tmpl.prompt)}
+                  className="flex flex-col items-start gap-2 p-4 rounded-2xl border-2 border-border/50 bg-muted/30 text-left transition-all hover:border-primary hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98]">
+                  <div className="p-2.5 rounded-xl bg-primary/10">
+                    <span className="text-lg">{tmpl.icon}</span>
                   </div>
+                  <p className="text-sm font-semibold">{tmpl.name}</p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">{tmpl.description}</p>
                 </button>
               ))}
               <button onClick={() => setShowTemplates(false)}
-                className="flex items-start gap-3 p-4 rounded-xl border border-border/50 hover:border-primary/40 hover:bg-primary/5 transition-all text-left group">
-                <span className="text-2xl">✨</span>
-                <div>
-                  <p className="text-sm font-semibold group-hover:text-primary transition-colors">Custom</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">Describe your own agent with AI.</p>
+                className="flex flex-col items-start gap-2 p-4 rounded-2xl border-2 border-border/50 bg-muted/30 text-left transition-all hover:border-primary hover:bg-primary/5 hover:scale-[1.02] active:scale-[0.98]">
+                <div className="p-2.5 rounded-xl bg-primary/10">
+                  <span className="text-lg">✨</span>
                 </div>
+                <p className="text-sm font-semibold">Custom</p>
+                <p className="text-[11px] text-muted-foreground leading-relaxed">Describe your own agent with AI.</p>
               </button>
             </div>
           </div>
@@ -198,8 +201,8 @@ export default function AgentCreatePage() {
 
           <div className="p-4 border-t border-border/50 space-y-2">
             <button onClick={() => setShowTemplates(true)}
-              className="w-full py-2 rounded-xl border border-border/50 text-xs font-medium text-muted-foreground hover:text-primary hover:border-primary/40 hover:bg-primary/5 transition-all">
-              Or start from a template →
+              className="w-full py-2 rounded-xl border border-primary/40 bg-primary/5 text-xs font-medium text-primary hover:bg-primary/10 transition-all">
+              Start from a template →
             </button>
             <div className="flex gap-2">
               <input
