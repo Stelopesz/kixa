@@ -174,7 +174,7 @@ export default function Profile() {
               <p className="text-xs text-muted-foreground">{t("general.solanaMainnet")}</p>
               <p className="text-sm font-medium font-mono">{shortAddress}</p>
             </div>
-            <span className="text-xs text-primary font-medium cursor-pointer hover:underline">{t("overview.viewExplorer")}</span>
+            <a href={`https://solscan.io/account/${address}`} target="_blank" rel="noopener noreferrer" className="text-xs text-primary font-medium cursor-pointer hover:underline">{t("overview.viewExplorer")}</a>
           </div>
         )}
 
