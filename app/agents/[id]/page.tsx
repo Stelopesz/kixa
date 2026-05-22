@@ -43,8 +43,8 @@ export default function AgentDetailPage() {
     <div>
       {showDeleteModal && (
         <div style={{position:"fixed",inset:0,zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:16}}>
-          <div style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.5)",backdropFilter:"blur(4px)"}} onClick={()=>setShowDeleteModal(false)} />
-          <div style={{position:"relative",width:"100%",maxWidth:440,padding:"32px 28px",borderRadius:20,background:"hsl(var(--background))",boxShadow:"0 20px 60px rgba(0,0,0,0.2)"}}>
+          <div style={{position:"absolute",inset:0,background:"rgba(0,0,0,0.4)",backdropFilter:"blur(4px)"}} onClick={()=>setShowDeleteModal(false)} />
+          <div style={{position:"relative",width:"100%",maxWidth:440,padding:"32px 28px",borderRadius:20,background:"hsl(var(--background))",boxShadow:"0 8px 30px rgba(0,0,0,0.1)",border:"1px solid hsl(var(--border) / 0.3)"}}>
             <h3 style={{fontSize:20,fontWeight:800,marginBottom:12,fontFamily:"'Archivo Black',sans-serif"}}>Delete Agent</h3>
             <p style={{fontSize:14,color:"hsl(var(--muted-foreground))",marginBottom:28,lineHeight:1.6}}>Are you sure you want to delete <strong>{agent.name}</strong>? This action cannot be undone.</p>
             <div style={{display:"flex",gap:10,justifyContent:"flex-end"}}>
