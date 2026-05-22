@@ -21,10 +21,11 @@ export default function Profile() {
   const { t } = useI18n();
   const navigate = useRouter();
 
-  const [userName, setUserName] = useState(() => localStorage.getItem("kixa-username") || t("profile.defaultName") || "KIXA User");
+  const [userName, setUserName] = useState(() => typeof window !== "undefined" ? localStorage.getItem("kixa-username") || t("profile.defaultName") || "KIXA User" : "KIXA User");
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState(userName);
   const [selectedColor, setSelectedColor] = useState(() => {
+    if (typeof window === "undefined") return 0;
     const saved = localStorage.getItem("kixa-avatar-color");
     return saved ? parseInt(saved) : 0;
   });
