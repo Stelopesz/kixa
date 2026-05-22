@@ -77,7 +77,7 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           createdAt: new Date(p.created_at),
           status: p.status || "active",
           agent: p.agent_id || "KIXA Agent",
-          agentName: p.agent_id || "KIXA Agent",
+          agentName: p.agent_name || "KIXA Agent",
           agent_id: p.agent_id,
           walletAddress: p.wallet_address,
           hash: p.id
@@ -104,15 +104,17 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   const addPermission = (permission: Permission) => {
     setPermissions(prev => [...prev, permission]);
+    setTimeout(() => fetchData(), 500);
   };
 
   const revokePermission = async (id: string) => {
+    const permission = permissions.find(p => p.id === id);
     await fetch("/api/permissions", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, status: "revoked" })
+      body: JSON.stringify({ id, status: "revoked", wallet_address: publicKey || permission?.walletAddress || "" })
     });
-    setPermissions(prev => prev.map(p => p.id === id ? { ...p, status: "revoked" } : p));
+    setPermissions(prev => prev.map(p => p.id === id ? { ...p, status: "revoked" as const } : p));
   };
 
   const renewPermission = (id: string, newExpiration: Date) => {
