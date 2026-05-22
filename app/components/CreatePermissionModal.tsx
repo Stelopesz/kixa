@@ -227,7 +227,6 @@ function buildSummary(type: string, config: any, t: TFunc): string {
     case "dca":
       return replace("summary.dcaDays", { limit, token, days });
     case "defi": {
-      const count = (config.addresses || "").split("\n").filter((a: string) => a.trim()).length;
       return replace("summary.defiDays", { limit, token, days });
     }
     case "custom":
