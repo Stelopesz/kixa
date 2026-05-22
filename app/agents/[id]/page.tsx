@@ -25,7 +25,7 @@ export default function AgentDetailPage() {
   }, [id, publicKey]);
 
   const handleDelete = async () => {
-    await fetch(`/api/agents?id=${agent.id}`, { method: "DELETE" });
+    await fetch(`/api/agents?id=${agent.id}&wallet=${publicKey}`, { method: "DELETE" });
     toast.success("Agent deleted successfully");
     router.push("/agents");
   };
@@ -71,7 +71,7 @@ export default function AgentDetailPage() {
           </div>
         </div>
         <div style={{display:"flex",gap:8}}>
-          <button onClick={async()=>{const s=agent.status==="active"?"paused":"active";await fetch("/api/agents",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:agent.id,status:s})});setAgent({...agent,status:s});}} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 20px",borderRadius:10,background:agent.status==="active"?"rgba(239,68,68,0.1)":"rgba(34,197,94,0.1)",color:agent.status==="active"?"#ef4444":"#22c55e",border:"none",cursor:"pointer",fontWeight:600}}>
+          <button onClick={async()=>{const s=agent.status==="active"?"paused":"active";await fetch("/api/agents",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:agent.id,status:s,wallet_address:publicKey})});setAgent({...agent,status:s});}} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 20px",borderRadius:10,background:agent.status==="active"?"rgba(239,68,68,0.1)":"rgba(34,197,94,0.1)",color:agent.status==="active"?"#ef4444":"#22c55e",border:"none",cursor:"pointer",fontWeight:600}}>
             {agent.status === "active" ? <><Pause size={16} />Pause</> : <><Play size={16} />Resume</>}
           </button>
           <button onClick={()=>setShowDeleteModal(true)} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 16px",borderRadius:10,background:"rgba(183,78,111,0.1)",color:"#b74e6f",border:"none",cursor:"pointer",fontWeight:600}}>
