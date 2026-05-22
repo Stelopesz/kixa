@@ -16,7 +16,7 @@ const AlertDialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-[100] bg-black/55 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className,
     )}
     onClick={(e) => e.stopPropagation()}
@@ -36,7 +36,7 @@ const AlertDialogContent = React.forwardRef<
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-0 z-[100] m-auto grid h-fit w-[calc(100%-2rem)] max-w-lg max-h-[calc(100dvh-2rem)] gap-4 overflow-y-auto border border-border/30 bg-background p-5 sm:p-6 shadow-md rounded-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+        "fixed inset-0 z-[100] m-auto grid h-fit w-[calc(100%-2rem)] max-w-lg max-h-[calc(100dvh-2rem)] gap-4 overflow-y-auto border border-border/60 bg-background p-5 sm:p-6 shadow-xl rounded-2xl data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         className,
       )}
       {...props}
