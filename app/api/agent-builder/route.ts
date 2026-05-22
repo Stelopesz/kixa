@@ -89,7 +89,8 @@ export async function POST(req: NextRequest) {
     if (jsonMatch) {
       try { agentConfig = JSON.parse(jsonMatch[1]); } catch {}
     }
-    return NextResponse.json({ message: text, agentConfig });
+    const cleanMessage = text.replace(/```json[\s\S]*?```/g, "").trim();
+    return NextResponse.json({ message: cleanMessage, agentConfig });
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
