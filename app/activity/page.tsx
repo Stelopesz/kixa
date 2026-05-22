@@ -95,7 +95,7 @@ export default function ActivityPage() {
     spend:    t("ptype.spend"),
     mint:     t("ptype.mint"),
     transfer: t("ptype.transfer"),
-    execute:  t("ptype.spend"),
+    execute:  t("activity.execute") || "Execute",
     swap:     t("ptype.swap"),
     custom:   t("ptype.custom"),
   };
