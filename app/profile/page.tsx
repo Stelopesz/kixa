@@ -146,7 +146,7 @@ export default function Profile() {
         {[
           { value: permissions.length, label: t("profile.totalPerms"), color: "text-primary" },
           { value: activePerms.length, label: t("overview.authorized"), color: "text-success" },
-          { value: revokedPerms.length, label: t("perms.revoke"), color: "text-destructive" },
+          { value: revokedPerms.length, label: t("status.revoked"), color: "text-destructive" },
           { value: activities.length, label: t("overview.events"), color: "text-primary" },
         ].map((stat) => (
           <div key={stat.label} className="stat-card !p-4 sm:!p-5 text-center">
