@@ -23,18 +23,25 @@ export async function POST(req: NextRequest) {
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json();
-  const { id, ...updates } = body;
+  const { id, wallet_address, ...updates } = body;
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
+  if (!wallet_address) return NextResponse.json({ error: "wallet_address required" }, { status: 400 });
+  const { data: existing } = await supabase.from("agents").select("wallet_address").eq("id", id).single();
+  if (!existing || existing.wallet_address !== wallet_address) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   updates.updated_at = new Date().toISOString();
-  const { data, error } = await supabase.from("agents").update(updates).eq("id", id).select().single();
+  const { data, error } = await supabase.from("agents").update(updates).eq("id", id).eq("wallet_address", wallet_address).select().single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data);
 }
 
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
+  const wallet = req.nextUrl.searchParams.get("wallet");
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
-  const { error } = await supabase.from("agents").delete().eq("id", id);
+  if (!wallet) return NextResponse.json({ error: "wallet required" }, { status: 400 });
+  const { data: existing } = await supabase.from("agents").select("wallet_address").eq("id", id).single();
+  if (!existing || existing.wallet_address !== wallet) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  const { error } = await supabase.from("agents").delete().eq("id", id).eq("wallet_address", wallet);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json({ success: true });
 }

@@ -23,8 +23,11 @@ export async function PATCH(req: NextRequest) {
   const body = await req.json();
   const { id, wallet_address, ...updates } = body;
   if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
-  const { data, error } = await supabase.from("permissions").update(updates).eq("id", id).select().single();
+  if (!wallet_address) return NextResponse.json({ error: "wallet_address required" }, { status: 400 });
+  const { data: existing } = await supabase.from("permissions").select("wallet_address").eq("id", id).single();
+  if (!existing || existing.wallet_address !== wallet_address) return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  const { data, error } = await supabase.from("permissions").update(updates).eq("id", id).eq("wallet_address", wallet_address).select().single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  if (updates.status === "revoked") { await supabase.from("activities").insert({ wallet_address: wallet_address || "", permission_id: id, type: "revoked", description: "Permission revoked" }); }
+  if (updates.status === "revoked") { await supabase.from("activities").insert({ wallet_address, permission_id: id, type: "revoked", description: "Permission revoked" }); }
   return NextResponse.json(data);
 }
