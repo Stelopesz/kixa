@@ -59,7 +59,7 @@ export default function AgentDetailPage() {
           <button onClick={async()=>{const s=agent.status==="active"?"paused":"active";await fetch("/api/agents",{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({id:agent.id,status:s})});setAgent({...agent,status:s});}} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 20px",borderRadius:10,background:agent.status==="active"?"rgba(239,68,68,0.1)":"rgba(34,197,94,0.1)",color:agent.status==="active"?"#ef4444":"#22c55e",border:"none",cursor:"pointer",fontWeight:600}}>
             {agent.status === "active" ? <><Pause size={16} />Pause</> : <><Play size={16} />Resume</>}
           </button>
-          <button onClick={async()=>{if(!confirm("Are you sure you want to delete this agent?"))return;await fetch(`/api/agents?id=${agent.id}`,{method:"DELETE"});router.push("/agents");}} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 16px",borderRadius:10,background:"rgba(239,68,68,0.1)",color:"#ef4444",border:"none",cursor:"pointer",fontWeight:600}}>
+          <button onClick={async()=>{const ok = await new Promise(res => { import('sonner').then(({toast}) => { toast("Delete this agent?", { action: { label: "Delete", onClick: () => res(true) }, cancel: { label: "Cancel", onClick: () => res(false) }, duration: 10000 }); }); }); if(!ok)return; await fetch(`/api/agents?id=${agent.id}`,{method:"DELETE"}); import('sonner').then(({toast}) => toast.success("Agent deleted")); router.push("/agents");}} style={{display:"flex",alignItems:"center",gap:8,padding:"10px 16px",borderRadius:10,background:"rgba(183,78,111,0.1)",color:"#b74e6f",border:"none",cursor:"pointer",fontWeight:600}}>
             <Trash2 size={16} />
           </button>
         </div>
@@ -71,7 +71,7 @@ export default function AgentDetailPage() {
             <Shield size={18} style={{color:"#b74e6f"}} />
             Permissions
           </h3>
-          {(agent.permissions||[]).length===0?<p style={{fontSize:14,color:"hsl(var(--muted-foreground))"}}>No permissions</p>:(agent.permissions||[]).map((p:any)=>(<div key={p.id} style={{padding:12,background:"hsl(var(--background))",border:"1px solid hsl(var(--border))",borderRadius:10,marginBottom:8,display:"flex",justifyContent:"space-between"}}><div><p style={{fontWeight:600,fontSize:14,margin:"0 0 2px"}}>{p.name}</p><p style={{fontSize:12,color:"hsl(var(--muted-foreground))",margin:0}}>{p.type} · {p.limit} {p.token}</p></div><span style={{fontSize:10,padding:"2px 6px",borderRadius:4,background:"rgba(34,197,94,0.1)",color:"#22c55e",border:"1px solid rgba(34,197,94,0.2)",fontWeight:500,letterSpacing:"0.02em"}}>{p.status||"active"}</span></div>))}
+          {(agent.permissions||[]).length===0?<p style={{fontSize:14,color:"hsl(var(--muted-foreground))"}}>No permissions</p>:(agent.permissions||[]).map((p:any)=>(<div key={p.id} style={{padding:12,background:"hsl(var(--background))",border:"1px solid hsl(var(--border))",borderRadius:10,marginBottom:8,display:"flex",justifyContent:"space-between"}}><div><p style={{fontWeight:600,fontSize:14,margin:"0 0 2px"}}>{p.name}</p><p style={{fontSize:12,color:"hsl(var(--muted-foreground))",margin:0}}>{p.type} · {p.limit} {p.token}</p></div><span style={{fontSize:11,padding:"2px 8px",borderRadius:20,background:"rgba(34,197,94,0.1)",color:"#22c55e",border:"1px solid rgba(34,197,94,0.2)",fontWeight:500,display:"inline-flex",alignItems:"center"}}>{p.status||"active"}</span></div>))}
         </div>
 
         <div className="stat-card" style={{padding:24}}>
