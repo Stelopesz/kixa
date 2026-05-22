@@ -225,7 +225,7 @@ function buildSummary(type: string, config: any, t: TFunc): string {
     case "perp":
       return replace("summary.perpDays", { limit, token, days });
     case "dca":
-      return replace("summary.timeDays", { start: config.startTime || "09:00", end: config.endTime || "18:00", limit, token, days });
+      return replace("summary.dcaDays", { limit, token, days });
     case "defi": {
       const count = (config.addresses || "").split("\n").filter((a: string) => a.trim()).length;
       return replace("summary.defiDays", { limit, token, days });
@@ -261,6 +261,7 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           wallet_address: publicKey,
+          agent_id: config.agent_id || null,
           type: selectedType,
           name: selectedType.charAt(0).toUpperCase() + selectedType.slice(1) + " Permission",
           description: buildSummary(selectedType, config, t),
