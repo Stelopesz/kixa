@@ -2,8 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletProvider } from "@/app/contexts/WalletContext";
-import { I18nProvider } from "@/app/contexts/I18nContext";
 import WalletModal from "@/app/components/WalletModal";
 import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles, ChevronDown } from "lucide-react";
 
@@ -504,5 +502,5 @@ function KixaLPInner() {
 }
 
 export default function KixaLP() {
-  return <WalletProvider><I18nProvider><KixaLPInner /></I18nProvider></WalletProvider>;
+  return <KixaLPInner />;
 }
