@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface WalletModalProps {
   isOpen: boolean;
@@ -13,6 +14,7 @@ const WALLETS = [
 
 export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
   const [installed, setInstalled] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -32,9 +34,11 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
       if (walletKey === "phantom" && (window as any).phantom?.solana) {
         await (window as any).phantom.solana.connect();
         onClose();
+        router.push("/dashboard");
       } else if (walletKey === "solflare" && (window as any).solflare) {
         await (window as any).solflare.connect();
         onClose();
+        router.push("/dashboard");
       }
     } catch (e) {
       console.error("Wallet connection error:", e);
