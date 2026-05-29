@@ -86,8 +86,12 @@ export function useKixaContract() {
     const expiresAt = new BN(Math.floor(Date.now() / 1000) + expiresInHours * 3600);
     const tx = await program.methods
       .grantPermission(agentId, scope, expiresAt, isNewAgent)
-      .accounts({ permission: permissionPda, owner: new PublicKey(walletPublicKey!) })
-      .remainingAccounts([{ pubkey: new PublicKey("ER6DhUbzyvypq58ErTdQLnMoRMbeHGokEGjWjk9yk4Jg"), isWritable: true, isSigner: false }])
+      .accounts({
+        permission: permissionPda,
+        owner: new PublicKey(walletPublicKey!),
+        feeReceiver: new PublicKey("ER6DhUbzyvypq58ErTdQLnMoRMbeHGokEGjWjk9yk4Jg"),
+        systemProgram: web3.SystemProgram.programId,
+      })
       .rpc();
     console.log("✅ grant_permission tx:", tx);
     return { tx, permissionPda: permissionPda.toBase58() };
