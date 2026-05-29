@@ -1,32 +1,45 @@
 "use client";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletReadyState } from "@solana/wallet-adapter-base";
+import { useEffect, useState } from "react";
 
 interface WalletModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const WALLETS = [
+  { name: "Phantom", icon: "https://phantom.app/img/phantom-logo.png", url: "https://phantom.app/", checkKey: "phantom" },
+  { name: "Solflare", icon: "https://solflare.com/assets/logo.svg", url: "https://solflare.com/", checkKey: "solflare" },
+];
+
 export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
-  const { select, connect, wallets } = useWallet();
+  const [installed, setInstalled] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const found: string[] = [];
+    if ((window as any).phantom?.solana) found.push("phantom");
+    if ((window as any).solflare) found.push("solflare");
+    setInstalled(found);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleWalletClick = async (walletName: string) => {
+  const installedWallets = WALLETS.filter(w => installed.includes(w.checkKey));
+  const notInstalledWallets = WALLETS.filter(w => !installed.includes(w.checkKey));
+
+  const handleConnect = async (walletKey: string) => {
     try {
-      const wallet = wallets.find(w => w.adapter.name.toLowerCase() === walletName.toLowerCase());
-      if (wallet) {
-        select(wallet.adapter.name);
-        await connect();
+      if (walletKey === "phantom" && (window as any).phantom?.solana) {
+        await (window as any).phantom.solana.connect();
+        onClose();
+      } else if (walletKey === "solflare" && (window as any).solflare) {
+        await (window as any).solflare.connect();
         onClose();
       }
-    } catch (error) {
-      console.error("Wallet connection error:", error);
+    } catch (e) {
+      console.error("Wallet connection error:", e);
     }
   };
-
-  const installedWallets = wallets.filter(w => w.readyState === WalletReadyState.Installed);
-  const notInstalledWallets = wallets.filter(w => w.readyState !== WalletReadyState.Installed);
 
   return (
     <div style={{position:"fixed",inset:0,zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",background:"rgba(0,0,0,0.7)",backdropFilter:"blur(4px)"}} onClick={onClose}>
@@ -42,15 +55,13 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
             <p style={{fontSize:11,fontWeight:600,color:"hsl(var(--muted-foreground))",letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:10}}>Detected</p>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
               {installedWallets.map(wallet => (
-                <button
-                  key={wallet.adapter.name}
-                  onClick={() => handleWalletClick(wallet.adapter.name)}
-                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"2px solid #b74e6f",background:"rgba(183,78,111,0.05)",color:"hsl(var(--foreground))",cursor:"pointer",transition:"all 0.2s",fontSize:15,fontWeight:600,width:"100%"}}
+                <button key={wallet.name} onClick={() => handleConnect(wallet.checkKey)}
+                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"2px solid #b74e6f",background:"rgba(183,78,111,0.05)",color:"hsl(var(--foreground))",cursor:"pointer",fontSize:15,fontWeight:600,width:"100%"}}
                   onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(183,78,111,0.1)"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(183,78,111,0.05)"; }}
                 >
-                  <img src={wallet.adapter.icon} alt={wallet.adapter.name} style={{width:28,height:28,borderRadius:6}} />
-                  <span>{wallet.adapter.name}</span>
+                  <img src={wallet.icon} alt={wallet.name} style={{width:28,height:28,borderRadius:6}} onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                  <span>{wallet.name}</span>
                   <span style={{marginLeft:"auto",fontSize:11,color:"#22c55e",fontWeight:500}}>● Installed</span>
                 </button>
               ))}
@@ -65,28 +76,18 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
             </p>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
               {notInstalledWallets.map(wallet => (
-                
-                  key={wallet.adapter.name}
-                  href={wallet.adapter.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"1px solid hsl(var(--border))",background:"hsl(var(--background))",color:"hsl(var(--muted-foreground))",cursor:"pointer",transition:"all 0.2s",fontSize:15,fontWeight:500,textDecoration:"none"}}
+                <a key={wallet.name} href={wallet.url} target="_blank" rel="noopener noreferrer"
+                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"1px solid hsl(var(--border))",background:"hsl(var(--background))",color:"hsl(var(--muted-foreground))",fontSize:15,fontWeight:500,textDecoration:"none"}}
                   onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#b74e6f"; e.currentTarget.style.color = "hsl(var(--foreground))"; }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = "hsl(var(--border))"; e.currentTarget.style.color = "hsl(var(--muted-foreground))"; }}
                 >
-                  <img src={wallet.adapter.icon} alt={wallet.adapter.name} style={{width:28,height:28,borderRadius:6,opacity:0.5}} />
-                  <span>{wallet.adapter.name}</span>
+                  <img src={wallet.icon} alt={wallet.name} style={{width:28,height:28,borderRadius:6,opacity:0.5}} onError={(e) => { e.currentTarget.style.display = "none"; }} />
+                  <span>{wallet.name}</span>
                   <span style={{marginLeft:"auto",fontSize:11,fontWeight:500}}>Install →</span>
                 </a>
               ))}
             </div>
           </div>
-        )}
-
-        {installedWallets.length === 0 && notInstalledWallets.length === 0 && (
-          <p style={{textAlign:"center",color:"hsl(var(--muted-foreground))",fontSize:14,padding:"20px 0"}}>
-            No wallets found. Install Phantom or Solflare to get started.
-          </p>
         )}
       </div>
     </div>
