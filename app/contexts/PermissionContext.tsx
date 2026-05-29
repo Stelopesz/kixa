@@ -91,7 +91,7 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
           permissionId: a.permission_id || "",
           description: a.description || "",
           timestamp: new Date(a.created_at),
-          status: "success"
+          status: (a.status as "success" | "failed" | "pending") || "success"
         })));
       }
     } catch (e) {
