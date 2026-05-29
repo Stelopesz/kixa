@@ -44,7 +44,7 @@ const PermissionContext = createContext<PermissionContextType>({
   loading: false,
   addPermission: () => {},
   revokePermission: () => {},
-  renewPermission: () => {},
+  renewPermission: async () => {},
   refresh: () => {}
 });
 
