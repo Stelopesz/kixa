@@ -35,7 +35,7 @@ export function useCloakPrivacy() {
 
       const { Connection, PublicKey } = await import("@solana/web3.js");
 
-      const connection = new Connection("https://api.mainnet-beta.solana.com", "confirmed");
+      const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
       const owner = await generateUtxoKeypair();
       const depositOutput = await createUtxo(
