@@ -239,7 +239,7 @@ function buildSummary(type: string, config: any, t: TFunc): string {
 /* ─── Main Modal ─── */
 export default function CreatePermissionModal({ onClose }: { onClose: () => void }) {
   const { addPermission } = usePermissions();
-  const { grantPermission } = useKixaContract(); const { shortAddress, publicKey } = useWallet();
+  const { shortAddress, publicKey } = useWallet();
   const { t } = useI18n();
   const [step, setStep] = useState(1);
   const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -248,6 +248,8 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
 
   const resolvedHours = config.expHours === 0 ? (parseInt(config.customDays || "7") * 24) : config.expHours;
 
+  const { grantPermission } = useKixaContract();
+
   const handleConfirm = async () => {
     if (!selectedType) return;
     try {
@@ -255,6 +257,17 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
       const agentId = `kixa-${selectedType}-${Date.now()}`;
       const expiration = new Date();
       expiration.setHours(expiration.getHours() + resolvedHours);
+
+      // 1. Write permission on-chain first
+      const { tx, permissionPda } = await grantPermission({
+        agentId,
+        scope,
+        expiresInHours: resolvedHours,
+        isNewAgent: true,
+      });
+      console.log("✅ On-chain tx:", tx, "PDA:", permissionPda);
+
+      // 2. Save to Supabase
       await fetch("/api/permissions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
