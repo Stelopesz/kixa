@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit } from "@/app/lib/rateLimit";
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
@@ -56,6 +57,8 @@ Examples of good replies:
 Never ask about price reference, rolling basis, or trigger conditions. Simplify to "at what price should it act?" if needed.`;
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  if (!rateLimit(ip, 10)) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   if (!ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: "Anthropic API key not configured" }, { status: 500 });
   }

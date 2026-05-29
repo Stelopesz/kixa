@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { rateLimit } from "@/app/lib/rateLimit";
 import { supabase } from "@/app/lib/supabase";
 
 export async function GET(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  if (!rateLimit(ip)) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   const wallet = req.nextUrl.searchParams.get("wallet");
   if (!wallet) return NextResponse.json({ error: "wallet required" }, { status: 400 });
   const { data, error } = await supabase.from("permissions").select("*").eq("wallet_address", wallet).order("created_at", { ascending: false });
@@ -10,6 +13,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") || "unknown";
+  if (!rateLimit(ip, 10)) return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   const body = await req.json();
   const { wallet_address, agent_id, type, name, description, token, limit, config, expiration } = body;
   if (!wallet_address || !type || !name) return NextResponse.json({ error: "wallet_address, type, name required" }, { status: 400 });
