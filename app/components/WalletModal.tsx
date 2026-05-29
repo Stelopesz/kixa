@@ -45,9 +45,9 @@ export default function WalletModal({ isOpen, onClose }: WalletModalProps) {
                 <button
                   key={wallet.adapter.name}
                   onClick={() => handleWalletClick(wallet.adapter.name)}
-                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"2px solid #b74e6f",background:"rgba(183,78,111,0.05)",color:"hsl(var(--foreground))",cursor:"pointer",transition:"all 0.2s",fontSize:15,fontWeight:600}}
-                  onMouseEnter={(e) => e.currentTarget.style.background = "rgba(183,78,111,0.1)"}
-                  onMouseLeave={(e) => e.currentTarget.style.background = "rgba(183,78,111,0.05)"}
+                  style={{display:"flex",alignItems:"center",gap:14,padding:"14px 18px",borderRadius:12,border:"2px solid #b74e6f",background:"rgba(183,78,111,0.05)",color:"hsl(var(--foreground))",cursor:"pointer",transition:"all 0.2s",fontSize:15,fontWeight:600,width:"100%"}}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(183,78,111,0.1)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(183,78,111,0.05)"; }}
                 >
                   <img src={wallet.adapter.icon} alt={wallet.adapter.name} style={{width:28,height:28,borderRadius:6}} />
                   <span>{wallet.adapter.name}</span>
