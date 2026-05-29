@@ -34,7 +34,7 @@ interface PermissionContextType {
   loading: boolean;
   addPermission: (permission: Permission) => void;
   revokePermission: (id: string) => void;
-  renewPermission: (id: string, newExpiration: Date) => void;
+  renewPermission: (id: string, newExpiration: Date) => Promise<void>;
   refresh: () => void;
 }
 
@@ -117,8 +117,20 @@ export const PermissionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setPermissions(prev => prev.map(p => p.id === id ? { ...p, status: "revoked" as const } : p));
   };
 
-  const renewPermission = (id: string, newExpiration: Date) => {
-    setPermissions(prev => prev.map(p => p.id === id ? { ...p, expiration: newExpiration, status: "active" } : p));
+  const renewPermission = async (id: string, newExpiration: Date) => {
+    const permission = permissions.find(p => p.id === id);
+    await fetch("/api/permissions", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id,
+        status: "active",
+        expiration: newExpiration.toISOString(),
+        wallet_address: publicKey || permission?.walletAddress || ""
+      })
+    });
+    setPermissions(prev => prev.map(p => p.id === id ? { ...p, expiration: newExpiration, status: "active" as const } : p));
+    setTimeout(() => fetchData(), 500);
   };
 
   return (
