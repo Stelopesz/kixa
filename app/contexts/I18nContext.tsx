@@ -201,7 +201,7 @@ const translations: Record<Locale, Record<string, string>> = {
     "ptype.dcaDesc": "Dollar cost averaging",
     "ptype.defi": "DeFi",
     "ptype.defiDesc": "DeFi protocol interactions",
-    "summary.swapDays": "Swap tokens for {days} days",
+    "summary.swapDays": "Trocar {from} por {to}, até {limit} por tx por {days} dias",
     "summary.spendDays": "Spend up to {limit} {token} for {days} days",
     "summary.dcaDays": "DCA for {days} days",
     "summary.perpDays": "Trade perps for {days} days",
