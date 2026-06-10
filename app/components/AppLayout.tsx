@@ -5,6 +5,7 @@ import Link from "next/link";
 import OnboardingTutorial, { OnboardingTutorialHandle } from "@/app/components/OnboardingTutorial";
 import { useRef } from "react";
 import { LayoutDashboard, Shield, Bot, Activity, User, Sun, Moon, HelpCircle, LogOut, Lock } from "lucide-react";
+import LanguageDropdown from "@/app/components/LanguageDropdown";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { useI18n } from "@/app/contexts/I18nContext";
 
@@ -89,7 +90,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <button onClick={()=>tutorialRef.current?.open()} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
               <HelpCircle size={18}/>{t("nav.quickGuide")}
             </button>
-
+            <LanguageDropdown />
           </div>
           <div style={{marginTop:16,padding:"10px 12px",background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <span style={{display:"flex",alignItems:"center",gap:8}}><span style={{width:8,height:8,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/><span style={{fontSize:12,fontFamily:"monospace"}}>{shortAddress}</span></span>
@@ -102,7 +103,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link href="/dashboard" style={{textDecoration:"none"}}><img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:28}}/></Link>
             <div style={{display:"flex",alignItems:"center",gap:4}}>
               <button onClick={()=>setIsDark(!isDark)} style={{padding:8,borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",cursor:"pointer"}}>{isDark?<Sun size={18}/>:<Moon size={18}/>}</button>
-
+              <LanguageDropdown />
             </div>
           </div>
           <div className="kx-main-inner">{children}</div>
