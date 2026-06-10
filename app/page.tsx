@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useWallet } from "@solana/wallet-adapter-react";
 import WalletModal from "@/app/components/WalletModal";
-import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles, ChevronDown } from "lucide-react";
+import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles, ChevronDown, Globe } from "lucide-react";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -101,6 +102,7 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
   const scrollY = useScrollY();
   const scrolled = scrollY > 30;
   const [isDark, setIsDark] = useState(false);
+  const { locale, setLocale } = useI18n();
 
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains("dark"));
@@ -128,8 +130,20 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
           <button onClick={toggleDark}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            
           </button>
+
+          <div className="flex items-center gap-0.5 px-1">
+            <Globe className="w-3.5 h-3.5 text-muted-foreground mr-1" />
+            {(["en", "pt", "es"] as const).map((l, i) => (
+              <span key={l} className="flex items-center">
+                {i > 0 && <span className="text-muted-foreground/30 text-xs mx-0.5">|</span>}
+                <button onClick={() => setLocale(l)}
+                  className={`px-1.5 py-1 rounded text-xs font-medium transition-all ${locale === l ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+                  {l.toUpperCase()}
+                </button>
+              </span>
+            ))}
+          </div>
 
           <a href="/docs" className="px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
             Docs
