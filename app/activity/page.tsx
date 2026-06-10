@@ -105,8 +105,8 @@ export default function ActivityPage() {
 
       {/* Header */}
       <div className="animate-in">
-        <h1 className="hidden md:block text-2xl font-semibold tracking-tight">Activity</h1>
-        <p className="text-sm text-muted-foreground md:mt-1">Track agent actions</p>
+        <h1 className="hidden md:block text-2xl font-semibold tracking-tight">{t("activity.title")}</h1>
+        <p className="text-sm text-muted-foreground md:mt-1">{t("activity.subtitle")}</p>
       </div>
 
       {/* Time Tabs */}
@@ -157,16 +157,16 @@ export default function ActivityPage() {
           <div className="w-16 h-16 rounded-2xl bg-muted/50 flex items-center justify-center mb-4">
             <Clock className="w-7 h-7 text-muted-foreground/50" />
           </div>
-          <h3 className="text-base font-medium text-muted-foreground mb-1">No activity yet</h3>
+          <h3 className="text-base font-medium text-muted-foreground mb-1">{t("actPage.emptyTitle")}</h3>
           <p className="text-sm text-muted-foreground/70 max-w-xs mb-4">
-            Agent actions will appear here
+            {t("actPage.emptyDesc")}
           </p>
           <button
             onClick={() => navigate.push("/permissions?create=true")}
             className="inline-flex items-center gap-2 px-6 py-3 h-12 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-all active:scale-[0.97]"
           >
             <Plus className="w-4 h-4" />
-            Create Permission
+            {t("activity.createPerm")}
           </button>
         </div>
       ) : (

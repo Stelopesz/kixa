@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import { Shield, ArrowRight, ArrowLeft, X, Sparkles, Check, Lock, Brain } from "lucide-react";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 const ICON_WRAP = "w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0";
 const CARD = "w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-muted/40 border border-border/50";
@@ -109,18 +110,13 @@ function Illus6() {
   );
 }
 
-const steps = [
-  { Illus: Illus1, badge: "Welcome", title: "Your AI agent.\nYour rules.", subtitle: "On-chain permission protocol for Solana.", desc: "KIXA lets you define exactly what your AI agent can do before it acts. You stay in control, always." },
-  { Illus: Illus2, badge: "How it works", title: "Two ways\nto get started.", subtitle: "Pick the flow that works for you.", desc: "Grant permissions to an existing agent instantly, or use the AI Builder to create a new agent with rules configured automatically." },
-  { Illus: Illus3, badge: "Permissions", title: "You decide\nwhat it can do.", subtitle: "Limits enforced before any action.", desc: "Set spend limits, token types and expiration dates. Your agent will never go beyond what you approved." },
-  { Illus: Illus4, badge: "AI Builder", title: "Describe it.\nAI handles the rest.", subtitle: "No code. No complexity.", desc: "Tell our AI what you want your agent to do. It configures the permissions and deploys everything on-chain for you." },
-  { Illus: Illus5, badge: "Security", title: "Safe by design.\nAlways.", subtitle: "Rules that cannot be bypassed.", desc: "Session keys enforce every rule on-chain. Spend limits, auto-expiration and recipient locks protect your wallet at all times." },
-  { Illus: Illus6, badge: "Activity", title: "Every action\nlogged for you.", subtitle: "Full transparency on what happened.", desc: "See every permission created, executed or revoked with timestamps. Nothing your agent does goes untracked." },
-];
+const ILLUS = [Illus1, Illus2, Illus3, Illus4, Illus5, Illus6];
+const STEP_KEYS = ["s1", "s2", "s3", "s4", "s5", "s6"] as const;
 
 export interface OnboardingTutorialHandle { open: () => void; }
 
 const OnboardingTutorial = forwardRef<OnboardingTutorialHandle>((_, ref) => {
+  const { t } = useI18n();
   const [visible, setVisible] = useState(false);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState("next");
@@ -142,14 +138,15 @@ const OnboardingTutorial = forwardRef<OnboardingTutorialHandle>((_, ref) => {
     setTimeout(() => { setCurrent(idx); setContentKey(k => k + 1); setAnimating(false); }, 200);
   };
 
-  const handleNext = () => current < steps.length - 1 ? transition(current + 1, "next") : handleClose();
+  const handleNext = () => current < STEP_KEYS.length - 1 ? transition(current + 1, "next") : handleClose();
   const handlePrev = () => current > 0 && transition(current - 1, "prev");
   const handleClose = () => { localStorage.setItem("kixa-onboarding-done", "true"); setVisible(false); };
 
   if (!visible) return null;
 
-  const s = steps[current];
-  const isLast = current === steps.length - 1;
+  const key = STEP_KEYS[current];
+  const Illus = ILLUS[current];
+  const isLast = current === STEP_KEYS.length - 1;
   const isFirst = current === 0;
   const contentClass = animating ? (direction === "next" ? "opacity-0 translate-x-3" : "opacity-0 -translate-x-3") : "opacity-100 translate-x-0";
 
@@ -160,25 +157,27 @@ const OnboardingTutorial = forwardRef<OnboardingTutorialHandle>((_, ref) => {
         <div style={{background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:16,padding:32,position:"relative",overflow:"hidden",width:"100%",maxWidth:400}}>
           <button onClick={handleClose} className="absolute top-4 right-4 p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"><X className="w-4 h-4" /></button>
           <div className="flex items-center justify-center gap-1.5 mb-6">
-            {steps.map((_, i) => (<div key={i} className={"h-1 rounded-full transition-all duration-300 " + (i === current ? "w-6 bg-primary" : i < current ? "w-1.5 bg-primary/40" : "w-1.5 bg-muted-foreground/20")} />))}
+            {STEP_KEYS.map((_, i) => (<div key={i} className={"h-1 rounded-full transition-all duration-300 " + (i === current ? "w-6 bg-primary" : i < current ? "w-1.5 bg-primary/40" : "w-1.5 bg-muted-foreground/20")} />))}
           </div>
           <div className={"transition-all duration-200 ease-out " + contentClass} key={contentKey}>
-            <s.Illus />
+            <Illus />
             <div className="flex justify-center mt-5 mb-4">
-              <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-semibold">{current + 1} of {steps.length} · {s.badge}</span>
+              <span className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-semibold">
+                {current + 1} {t("onboarding.ofSteps")} {STEP_KEYS.length} · {t(`onboarding.${key}.badge` as any)}
+              </span>
             </div>
-            <h3 className="text-[22px] font-bold tracking-tight leading-snug whitespace-pre-line text-center mb-2">{s.title}</h3>
-            <p className="text-[13px] font-medium text-primary text-center mb-3">{s.subtitle}</p>
-            <p className="text-[13px] text-muted-foreground leading-relaxed text-center mb-7">{s.desc}</p>
+            <h3 className="text-[22px] font-bold tracking-tight leading-snug whitespace-pre-line text-center mb-2">{t(`onboarding.${key}.title` as any)}</h3>
+            <p className="text-[13px] font-medium text-primary text-center mb-3">{t(`onboarding.${key}.subtitle` as any)}</p>
+            <p className="text-[13px] text-muted-foreground leading-relaxed text-center mb-7">{t(`onboarding.${key}.desc` as any)}</p>
           </div>
           <div className="flex items-center justify-between">
             {isFirst ? (
-              <button onClick={handleClose} className="text-xs text-muted-foreground hover:text-foreground transition-colors">Skip</button>
+              <button onClick={handleClose} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t("onboarding.skip")}</button>
             ) : (
-              <button onClick={handlePrev} className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"><ArrowLeft className="w-3.5 h-3.5" /> Back</button>
+              <button onClick={handlePrev} className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"><ArrowLeft className="w-3.5 h-3.5" /> {t("onboarding.back")}</button>
             )}
             <button onClick={handleNext} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-foreground text-background text-sm font-semibold hover:opacity-90 transition-all active:scale-[0.97]">
-              {isLast ? "Get Started" : "Next"} <ArrowRight className="w-3.5 h-3.5" />
+              {isLast ? t("onboarding.getStarted") : t("onboarding.next")} <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

@@ -43,8 +43,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
       <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center"}}>
         <div style={{textAlign:"center"}}>
-          <p style={{marginBottom:16,color:"hsl(var(--muted-foreground))"}}>Connecting wallet...</p>
-          <button onClick={()=>router.push("/")} style={{padding:"10px 24px",borderRadius:10,background:"#b74e6f",color:"#fff",border:"none",cursor:"pointer"}}>Go Home</button>
+          <p style={{marginBottom:16,color:"hsl(var(--muted-foreground))"}}>{t("wallet.connecting")}</p>
+          <button onClick={()=>router.push("/")} style={{padding:"10px 24px",borderRadius:10,background:"#b74e6f",color:"#fff",border:"none",cursor:"pointer"}}>{t("nav.goHome")}</button>
         </div>
       </div>
     );
@@ -85,7 +85,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </nav>
           <div style={{display:"flex",flexDirection:"column",gap:4,paddingTop:16,borderTop:"1px solid hsl(var(--border))"}}>
             <button onClick={()=>setIsDark(!isDark)} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
-              {isDark?<Sun size={18}/>:<Moon size={18}/>}{isDark?"Light mode":"Dark mode"}
+              {isDark?<Sun size={18}/>:<Moon size={18}/>}{isDark?t("app.lightMode"):t("app.darkMode")}
             </button>
             <button onClick={()=>tutorialRef.current?.open()} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
               <HelpCircle size={18}/>{t("nav.quickGuide")}

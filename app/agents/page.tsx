@@ -4,25 +4,23 @@ import { useRouter } from "next/navigation";
 import { Bot, Plus, Clock, Shield } from "lucide-react";
 import { useWallet } from "@/app/contexts/WalletContext";
 import { useAgents } from "@/app/hooks/useAgents";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 export default function AgentsPage() {
   const router = useRouter();
   const { connected, publicKey } = useWallet();
   const { agents, isLoading } = useAgents(publicKey || undefined);
+  const { t } = useI18n();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
-
-  useEffect(() => {
-    console.log("Agents data:", { connected, publicKey, agents, isLoading });
-  }, [connected, publicKey, agents, isLoading]);
 
   if (!mounted) return null;
 
   if (!connected) {
     return (
       <div style={{minHeight:"60vh",display:"flex",flexDirection:"column",gap:16,alignItems:"center",justifyContent:"center"}}>
-        <p style={{color:"hsl(var(--muted-foreground))"}}>Connecting wallet...</p>
+        <p style={{color:"hsl(var(--muted-foreground))"}}>{t("wallet.connecting")}</p>
       </div>
     );
   }
@@ -31,38 +29,38 @@ export default function AgentsPage() {
     <div>
       <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:28}}>
         <div>
-          <h1 style={{fontFamily:"'Archivo Black',sans-serif",fontSize:28,marginBottom:8}}>Your Agents</h1>
-          <p style={{fontSize:14,color:"hsl(var(--muted-foreground))"}}>Manage your AI agents and permissions</p>
+          <h1 style={{fontFamily:"'Archivo Black',sans-serif",fontSize:28,marginBottom:8}}>{t("dashboard.yourAgents")}</h1>
+          <p style={{fontSize:14,color:"hsl(var(--muted-foreground))"}}>{t("agents.subtitle")}</p>
         </div>
-        <button 
+        <button
           onClick={() => router.push("/agent/create")}
           style={{display:"flex",alignItems:"center",gap:8,padding:"10px 20px",borderRadius:10,background:"#b74e6f",color:"#fff",border:"none",cursor:"pointer",fontWeight:600,fontSize:14}}
         >
           <Plus size={16} />
-          Create Agent
+          {t("agents.create")}
         </button>
       </div>
 
       {isLoading ? (
         <div style={{padding:40,textAlign:"center",color:"hsl(var(--muted-foreground))"}}>
-          Loading agents...
+          {t("agents.loading")}
         </div>
       ) : agents.length === 0 ? (
         <div style={{padding:60,textAlign:"center",background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:16}}>
           <Bot size={48} style={{margin:"0 auto 16px",color:"hsl(var(--muted-foreground))",opacity:0.5}} />
-          <h3 style={{fontSize:18,fontWeight:600,marginBottom:8}}>No agents yet</h3>
-          <p style={{color:"hsl(var(--muted-foreground))",marginBottom:20}}>Create your first AI agent to get started</p>
-          <button 
+          <h3 style={{fontSize:18,fontWeight:600,marginBottom:8}}>{t("agents.empty")}</h3>
+          <p style={{color:"hsl(var(--muted-foreground))",marginBottom:20}}>{t("agents.emptyDesc")}</p>
+          <button
             onClick={() => router.push("/agent/create")}
             style={{padding:"10px 24px",borderRadius:10,background:"#b74e6f",color:"#fff",border:"none",cursor:"pointer",fontWeight:600}}
           >
-            Create First Agent
+            {t("agents.createFirst")}
           </button>
         </div>
       ) : (
         <div style={{display:"grid",gap:16}}>
           {agents.map((agent: any) => (
-            <div 
+            <div
               key={agent.id}
               onClick={() => router.push(`/agents/${agent.id}`)}
               className="stat-card"
@@ -75,7 +73,7 @@ export default function AgentsPage() {
                   </div>
                   <div>
                     <h3 style={{fontSize:16,fontWeight:600,marginBottom:2}}>{agent.name}</h3>
-                    <p style={{fontSize:13,color:"hsl(var(--muted-foreground))"}}>{agent.description || "No description"}</p>
+                    <p style={{fontSize:13,color:"hsl(var(--muted-foreground))"}}>{agent.description || t("dashboard.noDesc")}</p>
                   </div>
                 </div>
                 <span style={{
@@ -86,18 +84,18 @@ export default function AgentsPage() {
                   background: agent.status === 'active' ? "rgba(34,197,94,0.1)" : "rgba(148,163,184,0.1)",
                   color: agent.status === 'active' ? "#22c55e" : "#94a3b8"
                 }}>
-                  {agent.status?.toUpperCase()}
+                  {agent.status === 'active' ? t("status.active").toUpperCase() : t("agent.status.paused").toUpperCase()}
                 </span>
               </div>
 
               <div style={{display:"flex",gap:20,fontSize:12,color:"hsl(var(--muted-foreground))"}}>
                 <div style={{display:"flex",alignItems:"center",gap:6}}>
                   <Shield size={14} />
-                  <span>{agent.permissions?.length || 0} permissions</span>
+                  <span>{agent.permissions?.length || 0} {t("dashboard.permCount")}</span>
                 </div>
                 <div style={{display:"flex",alignItems:"center",gap:6}}>
                   <Clock size={14} />
-                  <span>Created {new Date(agent.created_at).toLocaleDateString()}</span>
+                  <span>{t("card.createdAt")} {new Date(agent.created_at).toLocaleDateString()}</span>
                 </div>
               </div>
             </div>
