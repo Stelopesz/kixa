@@ -89,7 +89,7 @@ export function useKixaContract() {
       .accounts({
         permission: permissionPda,
         owner: new PublicKey(walletPublicKey!),
-        feeReceiver: new PublicKey("XDuSpzzh2gH1H6RDcsRVp3191DmvDbjVC52BmkFoxpY"),
+        feeReceiver: new PublicKey("3U8B4s9arsQhssPTd5htzCeZFrAzc2pdfY58wy5vaph8"),
         systemProgram: web3.SystemProgram.programId,
       })
       .rpc();
