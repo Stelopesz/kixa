@@ -5,6 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import WalletModal from "@/app/components/WalletModal";
 import { Shield, Bot, Zap, Lock, Clock, ArrowRight, Sun, Moon, Check, Sparkles, ChevronDown } from "lucide-react";
 import LanguageDropdown from "@/app/components/LanguageDropdown";
+import { useI18n } from "@/app/contexts/I18nContext";
 
 function useReveal(threshold = 0.15) {
   const ref = useRef<HTMLDivElement>(null);
@@ -48,6 +49,7 @@ function useDark() {
 
 /* ── Floating shapes ── */
 function FloatingShapes({ scrollY, dark }: { scrollY: number; dark: boolean }) {
+  const { t } = useI18n();
   const c1 = dark ? "rgba(183,78,111,0.12)" : "rgba(183,78,111,0.08)";
   const c2 = dark ? "rgba(111,78,183,0.08)" : "rgba(183,120,78,0.06)";
   return (
@@ -80,7 +82,7 @@ function FloatingShapes({ scrollY, dark }: { scrollY: number; dark: boolean }) {
         <div style={{display:"flex",alignItems:"center",gap:8}}>
           <img src="/kixa-logo-light.svg" alt="KIXA" style={{height:24}} className="dark:hidden" />
           <img src="/kixa-logo-dark.svg" alt="KIXA" style={{height:24,display:"none"}} className="dark:block" />
-          <span style={{fontSize:12,color:"hsl(var(--muted-foreground))"}}>© 2026 KIXA. All rights reserved.</span>
+          <span style={{fontSize:12,color:"hsl(var(--muted-foreground))"}}>{t("lp.footer.rights")}</span>
         </div>
         <div style={{display:"flex",alignItems:"center",gap:16}}>
           <a href="https://x.com/usekixa" target="_blank" rel="noopener noreferrer" style={{display:"flex",alignItems:"center",gap:6,fontSize:13,color:"hsl(var(--muted-foreground))",textDecoration:"none",transition:"color 0.2s"}} onMouseEnter={e=>e.currentTarget.style.color="#b74e6f"} onMouseLeave={e=>e.currentTarget.style.color="hsl(var(--muted-foreground))"}>
@@ -99,6 +101,7 @@ function FloatingShapes({ scrollY, dark }: { scrollY: number; dark: boolean }) {
 
 /* ── Navbar ── */
 function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: boolean; toggleDark: () => void }) {
+  const { t } = useI18n();
   const scrollY = useScrollY();
   const scrolled = scrollY > 30;
   const [isDark, setIsDark] = useState(false);
@@ -132,11 +135,11 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
           </button>
           <LanguageDropdown />
           <a href="/docs" className="px-4 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all">
-            Docs
+            {t("lp.nav.docs")}
           </a>
           <button onClick={onConnect}
             className="px-5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-bold transition-all duration-300 hover:bg-primary/90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 active:scale-[0.97] ml-2">
-            Connect Wallet
+            {t("lp.nav.connect")}
           </button>
         </div>
       </div>
@@ -146,6 +149,7 @@ function Navbar({ onConnect, dark, toggleDark }: { onConnect: () => void; dark: 
 
 /* ── Hero ── */
 function Hero({ onConnect, scrollY, dark }: { onConnect: () => void; scrollY: number; dark: boolean }) {
+  const { t } = useI18n();
   const [vis, setVis] = useState(false);
   useEffect(() => { setTimeout(() => setVis(true), 150); }, []);
 
@@ -182,30 +186,30 @@ function Hero({ onConnect, scrollY, dark }: { onConnect: () => void; scrollY: nu
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] mb-6 sm:mb-8"
                 style={{ backdropFilter: "blur(8px)" }}>
                 <div className="w-1.5 h-1.5 rounded-full bg-primary" style={{ animation: "pulse-soft 2s ease-in-out infinite" }} />
-                <span className="text-[10px] sm:text-[11px] font-bold text-primary tracking-widest uppercase">On-chain Permission Protocol</span>
+                <span className="text-[10px] sm:text-[11px] font-bold text-primary tracking-widest uppercase">{t("lp.hero.badge")}</span>
               </div>
             </div>
 
             <h1 className={`transition-all duration-1000 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
               style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: "clamp(32px,6vw,76px)", lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 20, transitionDelay: "0.1s" }}>
-              Your agent,<br /><span className="text-primary">your rules.</span>
+              {t("lp.hero.title1")}<br /><span className="text-primary">{t("lp.hero.title2")}</span>
             </h1>
 
             <p className={`text-muted-foreground mx-auto md:mx-0 mb-8 sm:mb-10 leading-relaxed transition-all duration-1000 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
               style={{ fontSize: "clamp(14px,1.6vw,18px)", maxWidth: 300, transitionDelay: "0.2s" }}>
-              Create AI agents and define their on-chain permissions without code, with immutable rules on the blockchain.
+              {t("lp.hero.desc")}
             </p>
 
             <div className={`flex gap-3 flex-row justify-center md:justify-start transition-all duration-1000 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
               style={{ transitionDelay: "0.35s" }}>
               <button onClick={onConnect}
                 className="flex items-center gap-2 px-5 sm:px-8 py-2.5 sm:py-4 rounded-xl bg-primary text-primary-foreground text-sm sm:text-base font-bold hover:bg-primary/90 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.97]">
-                Get Started <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                {t("lp.hero.cta1")} <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               <a href="/docs"
                 className="flex items-center gap-2 px-5 sm:px-8 py-2.5 sm:py-4 rounded-xl border border-border/40 text-foreground/60 text-sm sm:text-base font-semibold hover:bg-muted/30 hover:text-foreground transition-all"
                 style={{ textDecoration: "none" }}>
-                Documentation
+                {t("lp.hero.cta2")}
               </a>
             </div>
           </div>
@@ -223,28 +227,35 @@ function Hero({ onConnect, scrollY, dark }: { onConnect: () => void; scrollY: nu
 
 /* ── Live Demo ── */
 function LiveDemo() {
+  const { t } = useI18n();
   const [ref, vis] = useReveal();
   const [step, setStep] = useState(0);
   useEffect(() => {
     if (!vis) return;
-    const t = [
+    const timers = [
       setTimeout(() => setStep(1), 500),
       setTimeout(() => setStep(2), 1400),
       setTimeout(() => setStep(3), 2300),
       setTimeout(() => setStep(4), 3300),
     ];
-    return () => t.forEach(clearTimeout);
+    return () => timers.forEach(clearTimeout);
   }, [vis]);
+
+  const demoCards = [
+    { icon: Lock, label: t("lp.demo.spendLimit"), value: t("lp.demo.spendLimitVal") },
+    { icon: Clock, label: t("lp.demo.frequency"), value: t("lp.demo.frequencyVal") },
+    { icon: Shield, label: t("lp.demo.autoExpiry"), value: t("lp.demo.autoExpiryVal") },
+  ];
 
   return (
     <section id="demo" ref={ref} className="py-32 px-6" style={{ maxWidth: 900, margin: "0 auto" }}>
       <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">See it in action</span>
+        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">{t("lp.demo.badge")}</span>
         <h2 className="mt-4 font-black tracking-tight" style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: "clamp(32px,5vw,52px)" }}>
-          From idea to agent<br />in seconds.
+          {t("lp.demo.title1")}<br />{t("lp.demo.title2")}
         </h2>
         <p className="text-muted-foreground mt-4 max-w-[420px] mx-auto leading-relaxed">
-          Just type what you want. AI creates the agent and sets permissions for you.
+          {t("lp.demo.desc")}
         </p>
       </div>
 
@@ -264,7 +275,7 @@ function LiveDemo() {
           {/* User msg */}
           <div className={`flex justify-end transition-all duration-600 ${step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
             <div className="px-5 py-3.5 rounded-2xl rounded-tr-md bg-primary text-primary-foreground text-sm max-w-[340px] leading-relaxed">
-              I want a DCA bot that buys 10 SOL worth of ETH every week, max 50 SOL total.
+              {t("lp.demo.msg")}
             </div>
           </div>
 
@@ -274,7 +285,7 @@ function LiveDemo() {
               <Sparkles className="w-4 h-4 text-primary" />
             </div>
             <div className="px-5 py-3.5 rounded-2xl rounded-tl-md bg-muted/40 text-sm max-w-[360px] leading-relaxed">
-              Got it! Here are the permissions for your DCA agent:
+              {t("lp.demo.aiReply")}
             </div>
           </div>
 
@@ -282,12 +293,8 @@ function LiveDemo() {
           <div className={`flex gap-3 items-start transition-all duration-600 ${step >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
             <div className="w-9 h-9 shrink-0" />
             <div className="space-y-2.5 flex-1 max-w-[360px]">
-              {[
-                { icon: Lock, label: "Spend Limit", value: "50 SOL max" },
-                { icon: Clock, label: "Frequency", value: "Every 7 days" },
-                { icon: Shield, label: "Auto-Expiration", value: "90 days" },
-              ].map(({ icon: Icon, label, value }, i) => (
-                <div key={label} className="flex items-center gap-3 px-4 py-3 rounded-xl glass-surface"
+              {demoCards.map(({ icon: Icon, label, value }, i) => (
+                <div key={i} className="flex items-center gap-3 px-4 py-3 rounded-xl glass-surface"
                   style={{ animation: step >= 3 ? `fade-up 0.4s ease-out ${i * 0.12}s forwards` : "none", opacity: step >= 3 ? undefined : 0 }}>
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <Icon className="w-3.5 h-3.5 text-primary" />
@@ -308,8 +315,8 @@ function LiveDemo() {
               <Check className="w-4 h-4 text-green-500" />
             </div>
             <div className="px-5 py-3.5 rounded-2xl rounded-tl-md border border-green-500/20 bg-green-500/5 text-sm max-w-[360px]">
-              <p className="font-bold text-green-600 dark:text-green-400">Agent deployed on-chain!</p>
-              <p className="text-muted-foreground text-xs mt-1">DCA Bot is live. First run in 7 days.</p>
+              <p className="font-bold text-green-600 dark:text-green-400">{t("lp.demo.deployed")}</p>
+              <p className="text-muted-foreground text-xs mt-1">{t("lp.demo.deployedDesc")}</p>
             </div>
           </div>
         </div>
@@ -320,34 +327,40 @@ function LiveDemo() {
 
 /* ── Two Ways ── */
 function TwoWays({ onConnect }: { onConnect: () => void }) {
+  const { t } = useI18n();
   const [ref, vis] = useReveal();
+
+  const cards = [
+    {
+      icon: Shield, delay: 0,
+      tag: t("lp.ways.qp.tag"), title: t("lp.ways.qp.title"),
+      desc: t("lp.ways.qp.desc"),
+      steps: [t("lp.ways.qp.s1"), t("lp.ways.qp.s2"), t("lp.ways.qp.s3"), t("lp.ways.qp.s4")],
+      cta: t("lp.ways.qp.cta"),
+    },
+    {
+      icon: Bot, delay: 0.12,
+      tag: t("lp.ways.ai.tag"), title: t("lp.ways.ai.title"),
+      desc: t("lp.ways.ai.desc"),
+      steps: [t("lp.ways.ai.s1"), t("lp.ways.ai.s2"), t("lp.ways.ai.s3"), t("lp.ways.ai.s4")],
+      cta: t("lp.ways.ai.cta"),
+    },
+  ];
+
   return (
     <section ref={ref} className="py-32 px-6" style={{ maxWidth: 1100, margin: "0 auto" }}>
       <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">Two ways to use KIXA</span>
+        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">{t("lp.ways.badge")}</span>
         <h2 className="mt-4 font-black tracking-tight" style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: "clamp(32px,5vw,52px)" }}>
-          Pick your path.
+          {t("lp.ways.title")}
         </h2>
         <p className="text-muted-foreground mt-4 max-w-[440px] mx-auto leading-relaxed">
-          Already have an agent or starting fresh — KIXA works either way.
+          {t("lp.ways.desc")}
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {[
-          {
-            icon: Shield, delay: 0, tag: "For existing agents", title: "Quick Permission",
-            desc: "Grant permissions to any AI agent in seconds. Set limits and rules — the agent starts instantly.",
-            steps: ["Connect your wallet", "Choose an existing agent", "Set spend limits and rules", "Agent is live instantly"],
-            cta: "Grant Permission",
-          },
-          {
-            icon: Bot, delay: 0.12, tag: "Build from scratch", title: "AI Agent Builder",
-            desc: "Tell our AI what you want. It figures out the permissions and deploys everything on-chain.",
-            steps: ["Describe your goal in plain text", "AI infers the right permissions", "Review and confirm the rules", "Agent deployed on-chain"],
-            cta: "Build an Agent",
-          },
-        ].map(({ icon: Icon, delay, tag, title, desc, steps, cta }) => (
+        {cards.map(({ icon: Icon, delay, tag, title, desc, steps, cta }) => (
           <div key={title}
             className={`glass-card rounded-3xl p-9 flex flex-col gap-8 transition-all duration-500 hover:border-primary/30 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.02] ${
               vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -363,7 +376,7 @@ function TwoWays({ onConnect }: { onConnect: () => void }) {
             </div>
             <div className="space-y-3">
               {steps.map((s, i) => (
-                <div key={s} className="flex items-center gap-3">
+                <div key={i} className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/15 flex items-center justify-center shrink-0">
                     <span className="text-[10px] font-bold text-primary">{i + 1}</span>
                   </div>
@@ -384,26 +397,27 @@ function TwoWays({ onConnect }: { onConnect: () => void }) {
 
 /* ── Features ── */
 function Features() {
+  const { t } = useI18n();
   const [ref, vis] = useReveal();
   const features = [
-    { icon: Lock, title: "Spend Limits", desc: "Cap how much SOL your agent can move. Never more than you allow." },
-    { icon: Clock, title: "Auto-Expiration", desc: "Permissions expire automatically. Set it and forget it." },
-    { icon: Shield, title: "Recipient Lock", desc: "Restrict to specific wallet addresses only." },
-    { icon: Zap, title: "Session Keys", desc: "Rules enforced on-chain via session keys." },
+    { icon: Lock, title: t("lp.feat.spendLimits"), desc: t("lp.feat.spendLimitsDesc") },
+    { icon: Clock, title: t("lp.feat.autoExpiry"), desc: t("lp.feat.autoExpiryDesc") },
+    { icon: Shield, title: t("lp.feat.recipientLock"), desc: t("lp.feat.recipientLockDesc") },
+    { icon: Zap, title: t("lp.feat.sessionKeys"), desc: t("lp.feat.sessionKeysDesc") },
   ];
 
   return (
     <section ref={ref} className="py-32 px-6" style={{ maxWidth: 1100, margin: "0 auto" }}>
       <div className={`text-center mb-16 transition-all duration-700 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">Security by default</span>
+        <span className="text-[11px] font-bold text-primary tracking-widest uppercase">{t("lp.feat.badge")}</span>
         <h2 className="mt-4 font-black tracking-tight" style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: "clamp(32px,5vw,52px)" }}>
-          Built to keep your<br />wallet safe.
+          {t("lp.feat.title1")}<br />{t("lp.feat.title2")}
         </h2>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
         {features.map(({ icon: Icon, title, desc }, i) => (
-          <div key={title}
+          <div key={i}
             className={`glass-card rounded-2xl p-7 transition-all duration-500 hover:border-primary/30 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/10 hover:scale-[1.03] ${
               vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
@@ -422,6 +436,7 @@ function Features() {
 
 /* ── Final CTA ── */
 function FinalCTA({ onConnect }: { onConnect: () => void }) {
+  const { t } = useI18n();
   const [ref, vis] = useReveal();
   return (
     <section ref={ref} className="py-32 px-6 text-center relative">
@@ -430,16 +445,16 @@ function FinalCTA({ onConnect }: { onConnect: () => void }) {
       </div>
       <div className={`max-w-[580px] mx-auto relative transition-all duration-900 ${vis ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <h2 className="font-black tracking-tight mb-6" style={{ fontFamily: "'Archivo Black',sans-serif", fontSize: "clamp(36px,6vw,66px)", lineHeight: 1 }}>
-          Your agent.<br /><span className="text-primary">Your rules.</span>
+          {t("lp.cta.title1")}<br /><span className="text-primary">{t("lp.cta.title2")}</span>
         </h2>
         <p className="text-muted-foreground text-lg leading-relaxed mb-12 max-w-[420px] mx-auto">
-          Start in under 30 seconds. Connect, set your rules and go.
+          {t("lp.cta.desc")}
         </p>
         <button onClick={onConnect}
           className="inline-flex items-center gap-2 px-10 py-4 rounded-2xl bg-primary text-primary-foreground text-lg font-bold hover:bg-primary/90 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.97]">
-          Get Started Now <ArrowRight className="w-5 h-5" />
+          {t("lp.cta.btn")} <ArrowRight className="w-5 h-5" />
         </button>
-        <p className="mt-5 text-xs text-muted-foreground/40">No signup. Just connect and go.</p>
+        <p className="mt-5 text-xs text-muted-foreground/40">{t("lp.cta.note")}</p>
       </div>
     </section>
   );
