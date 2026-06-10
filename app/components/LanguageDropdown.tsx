@@ -11,6 +11,8 @@ const languages: { code: Locale; label: string; flag: string }[] = [
 export default function LanguageDropdown({ openUp = false }: { openUp?: boolean }) {
   const { locale, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
+  const [pos, setPos] = useState({ top: 0, left: 0, width: 176 });
+  const btnRef = useRef<HTMLButtonElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,12 +23,29 @@ export default function LanguageDropdown({ openUp = false }: { openUp?: boolean 
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  const handleOpen = () => {
+    if (!open && btnRef.current) {
+      const r = btnRef.current.getBoundingClientRect();
+      if (openUp) {
+        setPos({ top: r.top - 8, left: r.left, width: Math.max(r.width, 176) });
+      } else {
+        setPos({ top: r.bottom + 4, left: r.left, width: Math.max(r.width, 176) });
+      }
+    }
+    setOpen(!open);
+  };
+
   const current = languages.find((l) => l.code === locale)!;
+
+  const dropdownStyle: React.CSSProperties = openUp
+    ? { position: "fixed", bottom: `calc(100vh - ${pos.top}px)`, left: pos.left, width: pos.width, zIndex: 9999 }
+    : { position: "fixed", top: pos.top, left: pos.left, width: pos.width, zIndex: 9999 };
 
   return (
     <div ref={ref} className="relative">
       <button
-        onClick={() => setOpen(!open)}
+        ref={btnRef}
+        onClick={handleOpen}
         className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all duration-200 w-full"
       >
         <Globe className="w-4 h-4" />
@@ -34,7 +53,10 @@ export default function LanguageDropdown({ openUp = false }: { openUp?: boolean 
       </button>
 
       {open && (
-        <div className={`absolute ${openUp ? "bottom-full mb-1" : "top-full mt-1"} right-0 w-44 rounded-xl bg-popover border border-border shadow-lg z-[200] py-1 animate-scale-in`}>
+        <div
+          style={dropdownStyle}
+          className="rounded-xl bg-popover border border-border shadow-lg py-1 animate-scale-in"
+        >
           {languages.map((lang) => (
             <button
               key={lang.code}
