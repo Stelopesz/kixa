@@ -31,7 +31,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     { href: "/permissions", icon: Shield, label: t("nav.permissions") },
     { href: "/agents", icon: Bot, label: t("nav.agent") },
     { href: "/activity", icon: Activity, label: t("nav.activity") },
-    { href: "/private", icon: Lock, label: "Private" },
+    { href: "/private", icon: Lock, label: t("nav.private") },
     { href: "/profile", icon: User, label: t("nav.profile") }
   ];
 
@@ -74,7 +74,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link href="/dashboard" style={{textDecoration:"none"}}>
               <img src={isDark?"/kixa-logo-dark.svg":"/kixa-logo-light.svg"} alt="KIXA" style={{height:36, marginLeft:-4}} />
             </Link>
-            <p style={{fontSize:11,color:"hsl(var(--muted-foreground))",marginTop:6,marginLeft:0,paddingLeft:0}}>AI moves fast.<br/>Your rules move first.</p>
+            <p style={{fontSize:11,color:"hsl(var(--muted-foreground))",marginTop:6,marginLeft:0,paddingLeft:0}}>{t("app.tagline1")}<br/>{t("app.tagline2")}</p>
           </div>
           <nav style={{flex:1,display:"flex",flexDirection:"column",gap:4}}>
             {navItems.map(({href,icon:Icon,label})=>(
@@ -90,7 +90,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <button onClick={()=>tutorialRef.current?.open()} style={{display:"flex",alignItems:"center",gap:12,padding:"10px 12px",borderRadius:8,background:"transparent",border:"none",color:"hsl(var(--muted-foreground))",fontSize:14,cursor:"pointer",width:"100%",fontFamily:"inherit"}}>
               <HelpCircle size={18}/>{t("nav.quickGuide")}
             </button>
-            <LanguageDropdown />
+            <LanguageDropdown openUp />
           </div>
           <div style={{marginTop:16,padding:"10px 12px",background:"hsl(var(--card))",border:"1px solid hsl(var(--border))",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <span style={{display:"flex",alignItems:"center",gap:8}}><span style={{width:8,height:8,borderRadius:"50%",background:"#22c55e",display:"inline-block"}}/><span style={{fontSize:12,fontFamily:"monospace"}}>{shortAddress}</span></span>

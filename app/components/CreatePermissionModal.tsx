@@ -72,11 +72,11 @@ function StepConfigSwap({ config, setConfig, t }: ConfigFormProps) {
 function StepConfigPerp({ config, setConfig, t }: ConfigFormProps) {
   return (
     <div className="space-y-5">
-      <Field label="Max Position Size">
+      <Field label={t("field.maxPosition" as any)}>
         <input type="number" step="0.01" value={config.limit || ""} onChange={(e) => setConfig({ ...config, limit: e.target.value })}
           placeholder="50" className="modal-input" />
       </Field>
-      <Field label="Collateral Token">
+      <Field label={t("field.collateral" as any)}>
         <ChipSelect options={tokens as unknown as string[]} value={config.token || "USDC"} onChange={(v) => setConfig({ ...config, token: v })} />
       </Field>
       <Field label={t("field.duration" as any)}>
@@ -87,21 +87,21 @@ function StepConfigPerp({ config, setConfig, t }: ConfigFormProps) {
 }
 
 function StepConfigDCA({ config, setConfig, t }: ConfigFormProps) {
-  const frequencies = ["Daily", "Weekly", "Biweekly", "Monthly"];
+  const frequencies = [t("freq.daily" as any), t("freq.weekly" as any), t("freq.biweekly" as any), t("freq.monthly" as any)];
   return (
     <div className="space-y-5">
-      <Field label="Amount Per Buy">
+      <Field label={t("field.amountPerBuy" as any)}>
         <input type="number" step="0.01" value={config.limit || ""} onChange={(e) => setConfig({ ...config, limit: e.target.value })}
           placeholder="10" className="modal-input" />
       </Field>
-      <Field label="From Token">
+      <Field label={t("field.fromToken" as any)}>
         <ChipSelect options={tokens as unknown as string[]} value={config.fromToken || "SOL"} onChange={(v) => setConfig({ ...config, fromToken: v })} />
       </Field>
-      <Field label="To Token">
+      <Field label={t("field.toToken" as any)}>
         <ChipSelect options={tokens as unknown as string[]} value={config.toToken || "USDC"} onChange={(v) => setConfig({ ...config, toToken: v })} />
       </Field>
-      <Field label="Frequency">
-        <ChipSelect options={frequencies} value={config.frequency || "Weekly"} onChange={(v) => setConfig({ ...config, frequency: v })} />
+      <Field label={t("field.frequency" as any)}>
+        <ChipSelect options={frequencies} value={config.frequency || t("freq.weekly" as any)} onChange={(v) => setConfig({ ...config, frequency: v })} />
       </Field>
       <Field label={t("field.duration" as any)}>
         <DurationSelect t={t} value={config.expHours} onChange={(h) => setConfig({ ...config, expHours: h })} customDays={config.customDays} onCustomDays={(d) => setConfig({ ...config, customDays: d })} />
@@ -114,10 +114,10 @@ function StepConfigDeFi({ config, setConfig, t }: ConfigFormProps) {
   const protocols = ["Marinade", "Jupiter", "Raydium", "Drift", "Kamino", "Other"];
   return (
     <div className="space-y-5">
-      <Field label="Protocol">
+      <Field label={t("field.protocol" as any)}>
         <ChipSelect options={protocols} value={config.protocol || "Marinade"} onChange={(v) => setConfig({ ...config, protocol: v })} />
       </Field>
-      <Field label="Max Amount">
+      <Field label={t("field.maxAmount" as any)}>
         <input type="number" step="0.01" value={config.limit || ""} onChange={(e) => setConfig({ ...config, limit: e.target.value })}
           placeholder="10" className="modal-input" />
       </Field>
@@ -287,7 +287,7 @@ export default function CreatePermissionModal({ onClose }: { onClose: () => void
       confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, zIndex: 9999 });
       setTimeout(onClose, 2500);
     } catch (err) {
-      toast.error("Erro ao gravar permissão on-chain");
+      toast.error(t("modal.onchainError" as any));
       console.error(err);
     }
   };

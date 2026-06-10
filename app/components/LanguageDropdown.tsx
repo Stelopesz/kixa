@@ -8,7 +8,7 @@ const languages: { code: Locale; label: string; flag: string }[] = [
   { code: "es", label: "Español", flag: "🇪🇸" },
 ];
 
-export default function LanguageDropdown() {
+export default function LanguageDropdown({ openUp = false }: { openUp?: boolean }) {
   const { locale, setLocale } = useI18n();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ export default function LanguageDropdown() {
       </button>
 
       {open && (
-        <div className="absolute top-full right-0 mt-1 w-44 rounded-xl bg-popover border border-border shadow-lg z-50 py-1 animate-scale-in">
+        <div className={`absolute ${openUp ? "bottom-full mb-1" : "top-full mt-1"} right-0 w-44 rounded-xl bg-popover border border-border shadow-lg z-[200] py-1 animate-scale-in`}>
           {languages.map((lang) => (
             <button
               key={lang.code}
