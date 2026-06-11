@@ -114,16 +114,16 @@ h1, h2, h3, h4, h5, h6 {
 .glass-card {
   background: hsl(var(--card) / 0.8);
   backdrop-filter: blur(20px);
-  border: 1px solid hsl(var(--border) / 0.5);
+  border: 1px solid hsl(var(--border) / 0.15);
   border-radius: 1rem;
-  box-shadow: 0 0 0 1px hsl(var(--glass-border)), 0 1px 2px hsl(var(--glass-shadow)), 0 4px 16px hsl(var(--glass-shadow));
+  box-shadow: 0 1px 2px hsl(var(--glass-shadow)), 0 4px 16px hsl(var(--glass-shadow));
 }
 .glass-card-elevated {
   background: hsl(var(--card) / 0.9);
   backdrop-filter: blur(24px);
-  border: 1px solid hsl(var(--border) / 0.4);
+  border: 1px solid hsl(var(--border) / 0.12);
   border-radius: 1rem;
-  box-shadow: 0 0 0 1px hsl(var(--glass-border)), 0 2px 4px hsl(var(--glass-shadow)), 0 8px 32px hsl(var(--glass-shadow)), 0 24px 48px hsl(var(--glass-shadow));
+  box-shadow: 0 2px 4px hsl(var(--glass-shadow)), 0 8px 32px hsl(var(--glass-shadow)), 0 24px 48px hsl(var(--glass-shadow));
 }
 .glass-surface {
   background: hsl(var(--card) / 0.6);
